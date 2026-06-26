@@ -1,0 +1,424 @@
+{
+  "devices": {
+    "RTR-001": {
+      "id": "RTR-001",
+      "type": "router",
+      "icon": "\ud83d\udd00",
+      "vendor": "Nokia",
+      "os": "IOS-XR 7.9",
+      "ip": "10.7.0.2",
+      "role": "core",
+      "location": "Ground-Station-B",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "RTR-002": {
+      "id": "RTR-002",
+      "type": "router",
+      "icon": "\ud83d\udd00",
+      "vendor": "Juniper",
+      "os": "IOS-XR 7.9",
+      "ip": "10.58.0.3",
+      "role": "core",
+      "location": "DC-South",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "RTR-003": {
+      "id": "RTR-003",
+      "type": "router",
+      "icon": "\ud83d\udd00",
+      "vendor": "Nokia",
+      "os": "IOS-XR 7.9",
+      "ip": "10.174.0.4",
+      "role": "core",
+      "location": "Ground-Station-B",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "SW-004": {
+      "id": "SW-004",
+      "type": "switch",
+      "icon": "\ud83d\udd17",
+      "vendor": "HPE",
+      "os": "NX-OS 10.3",
+      "ip": "10.152.0.5",
+      "role": "distribution",
+      "location": "DC-West",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "SW-005": {
+      "id": "SW-005",
+      "type": "switch",
+      "icon": "\ud83d\udd17",
+      "vendor": "Cisco",
+      "os": "NX-OS 10.3",
+      "ip": "10.24.0.6",
+      "role": "distribution",
+      "location": "DC-South",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "SW-006": {
+      "id": "SW-006",
+      "type": "switch",
+      "icon": "\ud83d\udd17",
+      "vendor": "Cisco",
+      "os": "Comware 7.1",
+      "ip": "10.155.0.7",
+      "role": "distribution",
+      "location": "DC-North",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "SW-007": {
+      "id": "SW-007",
+      "type": "switch",
+      "icon": "\ud83d\udd17",
+      "vendor": "HPE",
+      "os": "NX-OS 10.3",
+      "ip": "10.184.0.8",
+      "role": "distribution",
+      "location": "Ground-Station-B",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "SW-008": {
+      "id": "SW-008",
+      "type": "switch",
+      "icon": "\ud83d\udd17",
+      "vendor": "HPE",
+      "os": "Comware 7.1",
+      "ip": "10.108.0.9",
+      "role": "distribution",
+      "location": "DC-South",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "SRV-009": {
+      "id": "SRV-009",
+      "type": "server",
+      "icon": "\ud83d\udda5\ufe0f",
+      "vendor": "HPE",
+      "os": "Rocky 9.3",
+      "ip": "10.72.0.10",
+      "role": "compute",
+      "location": "Mission-Control",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "SRV-010": {
+      "id": "SRV-010",
+      "type": "server",
+      "icon": "\ud83d\udda5\ufe0f",
+      "vendor": "Dell",
+      "os": "RHEL 9.3",
+      "ip": "10.179.0.11",
+      "role": "compute",
+      "location": "DC-West",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "SRV-011": {
+      "id": "SRV-011",
+      "type": "server",
+      "icon": "\ud83d\udda5\ufe0f",
+      "vendor": "HPE",
+      "os": "Ubuntu 22.04 LTS",
+      "ip": "10.40.0.12",
+      "role": "compute",
+      "location": "DC-South",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "SRV-012": {
+      "id": "SRV-012",
+      "type": "server",
+      "icon": "\ud83d\udda5\ufe0f",
+      "vendor": "HPE",
+      "os": "RHEL 9.3",
+      "ip": "10.24.0.13",
+      "role": "compute",
+      "location": "DC-West",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "SRV-013": {
+      "id": "SRV-013",
+      "type": "server",
+      "icon": "\ud83d\udda5\ufe0f",
+      "vendor": "Dell",
+      "os": "Ubuntu 22.04 LTS",
+      "ip": "10.217.0.14",
+      "role": "compute",
+      "location": "DC-East",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "SRV-014": {
+      "id": "SRV-014",
+      "type": "server",
+      "icon": "\ud83d\udda5\ufe0f",
+      "vendor": "Lenovo",
+      "os": "Ubuntu 22.04 LTS",
+      "ip": "10.207.0.15",
+      "role": "compute",
+      "location": "DC-North",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "SRV-015": {
+      "id": "SRV-015",
+      "type": "server",
+      "icon": "\ud83d\udda5\ufe0f",
+      "vendor": "Lenovo",
+      "os": "Ubuntu 22.04 LTS",
+      "ip": "10.138.0.16",
+      "role": "compute",
+      "location": "DC-North",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "SRV-016": {
+      "id": "SRV-016",
+      "type": "server",
+      "icon": "\ud83d\udda5\ufe0f",
+      "vendor": "HPE",
+      "os": "RHEL 9.3",
+      "ip": "10.142.0.17",
+      "role": "compute",
+      "location": "DC-East",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "SRV-017": {
+      "id": "SRV-017",
+      "type": "server",
+      "icon": "\ud83d\udda5\ufe0f",
+      "vendor": "Lenovo",
+      "os": "Rocky 9.3",
+      "ip": "10.227.0.18",
+      "role": "compute",
+      "location": "Mission-Control",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "SRV-018": {
+      "id": "SRV-018",
+      "type": "server",
+      "icon": "\ud83d\udda5\ufe0f",
+      "vendor": "HPE",
+      "os": "Rocky 9.3",
+      "ip": "10.50.0.19",
+      "role": "compute",
+      "location": "Ground-Station-B",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "FW-019": {
+      "id": "FW-019",
+      "type": "firewall",
+      "icon": "\ud83d\udee1\ufe0f",
+      "vendor": "Palo Alto",
+      "os": "PAN-OS 11.1",
+      "ip": "10.170.0.20",
+      "role": "security",
+      "location": "DC-South",
+      "status": "healthy",
+      "risk_score": 0.0
+    },
+    "FW-020": {
+      "id": "FW-020",
+      "type": "firewall",
+      "icon": "\ud83d\udee1\ufe0f",
+      "vendor": "Fortinet",
+      "os": "PAN-OS 11.1",
+      "ip": "10.219.0.21",
+      "role": "security",
+      "location": "DC-South",
+      "status": "healthy",
+      "risk_score": 0.0
+    }
+  },
+  "edges": [
+    {
+      "source": "RTR-001",
+      "target": "RTR-003",
+      "link_type": "core",
+      "bandwidth_gbps": 100
+    },
+    {
+      "source": "RTR-001",
+      "target": "FW-020",
+      "link_type": "security",
+      "bandwidth_gbps": 40
+    },
+    {
+      "source": "RTR-001",
+      "target": "SW-005",
+      "link_type": "distribution",
+      "bandwidth_gbps": 40
+    },
+    {
+      "source": "RTR-001",
+      "target": "SW-006",
+      "link_type": "distribution",
+      "bandwidth_gbps": 40
+    },
+    {
+      "source": "RTR-001",
+      "target": "SW-007",
+      "link_type": "distribution",
+      "bandwidth_gbps": 40
+    },
+    {
+      "source": "RTR-001",
+      "target": "SW-008",
+      "link_type": "distribution",
+      "bandwidth_gbps": 40
+    },
+    {
+      "source": "RTR-002",
+      "target": "RTR-003",
+      "link_type": "core",
+      "bandwidth_gbps": 100
+    },
+    {
+      "source": "RTR-002",
+      "target": "FW-019",
+      "link_type": "security",
+      "bandwidth_gbps": 40
+    },
+    {
+      "source": "RTR-002",
+      "target": "SW-004",
+      "link_type": "distribution",
+      "bandwidth_gbps": 40
+    },
+    {
+      "source": "RTR-002",
+      "target": "SW-005",
+      "link_type": "distribution",
+      "bandwidth_gbps": 40
+    },
+    {
+      "source": "RTR-003",
+      "target": "SW-004",
+      "link_type": "distribution",
+      "bandwidth_gbps": 40
+    },
+    {
+      "source": "RTR-003",
+      "target": "SW-006",
+      "link_type": "distribution",
+      "bandwidth_gbps": 40
+    },
+    {
+      "source": "RTR-003",
+      "target": "SW-007",
+      "link_type": "distribution",
+      "bandwidth_gbps": 40
+    },
+    {
+      "source": "RTR-003",
+      "target": "SW-008",
+      "link_type": "distribution",
+      "bandwidth_gbps": 40
+    },
+    {
+      "source": "SW-004",
+      "target": "SRV-012",
+      "link_type": "access",
+      "bandwidth_gbps": 10
+    },
+    {
+      "source": "SW-004",
+      "target": "SRV-014",
+      "link_type": "access",
+      "bandwidth_gbps": 10
+    },
+    {
+      "source": "SW-005",
+      "target": "SRV-009",
+      "link_type": "access",
+      "bandwidth_gbps": 10
+    },
+    {
+      "source": "SW-005",
+      "target": "SRV-017",
+      "link_type": "access_redundant",
+      "bandwidth_gbps": 10
+    },
+    {
+      "source": "SW-005",
+      "target": "SRV-018",
+      "link_type": "access",
+      "bandwidth_gbps": 10
+    },
+    {
+      "source": "SW-006",
+      "target": "SRV-010",
+      "link_type": "access",
+      "bandwidth_gbps": 10
+    },
+    {
+      "source": "SW-006",
+      "target": "SRV-011",
+      "link_type": "access_redundant",
+      "bandwidth_gbps": 10
+    },
+    {
+      "source": "SW-006",
+      "target": "SRV-013",
+      "link_type": "access",
+      "bandwidth_gbps": 10
+    },
+    {
+      "source": "SW-006",
+      "target": "SRV-015",
+      "link_type": "access",
+      "bandwidth_gbps": 10
+    },
+    {
+      "source": "SW-007",
+      "target": "SRV-015",
+      "link_type": "access_redundant",
+      "bandwidth_gbps": 10
+    },
+    {
+      "source": "SW-007",
+      "target": "SRV-016",
+      "link_type": "access",
+      "bandwidth_gbps": 10
+    },
+    {
+      "source": "SW-007",
+      "target": "SRV-017",
+      "link_type": "access",
+      "bandwidth_gbps": 10
+    },
+    {
+      "source": "SW-008",
+      "target": "SRV-011",
+      "link_type": "access",
+      "bandwidth_gbps": 10
+    },
+    {
+      "source": "SW-008",
+      "target": "SRV-014",
+      "link_type": "access_redundant",
+      "bandwidth_gbps": 10
+    }
+  ],
+  "summary": {
+    "total_devices": 20,
+    "total_links": 28,
+    "device_type_counts": {
+      "router": 3,
+      "switch": 5,
+      "server": 10,
+      "firewall": 2
+    }
+  }
+}

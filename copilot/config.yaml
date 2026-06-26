@@ -1,0 +1,93 @@
+# ============================================================
+# Air-Gapped Predictive Co-Pilot — Master Configuration
+# ============================================================
+
+project:
+  name: "Air-Gapped Predictive Co-Pilot"
+  version: "1.0.0"
+
+# ---- Paths (relative to project root) ----
+paths:
+  models_dir: "models"
+  llm_model: "models/llm/model.gguf"
+  embeddings_model: "models/embeddings"
+  data_dir: "data"
+  runbooks_dir: "data/runbooks"
+  store_dir: "data/store"
+  sqlite_db: "data/store/telemetry.db"
+  faiss_index: "data/store/faiss_index"
+
+# ---- Simulator Settings ----
+simulator:
+  num_devices: 20
+  device_types:
+    - router
+    - switch
+    - server
+    - firewall
+  topology_type: "hierarchical"  # hierarchical | mesh | ring
+  tick_interval_seconds: 5
+  history_hours: 24
+  failure_injection:
+    enabled: true
+    min_failures: 3
+    max_failures: 6
+    pre_failure_window_minutes: 30  # degradation ramp before failure
+  metrics:
+    cpu_normal_range: [10, 60]
+    cpu_warning: 80
+    cpu_critical: 95
+    error_rate_normal: [0.0, 0.02]
+    error_rate_warning: 0.05
+    error_rate_critical: 0.15
+    latency_normal_ms: [1, 20]
+    latency_warning_ms: 50
+    latency_critical_ms: 200
+    temperature_normal: [30, 55]
+    temperature_warning: 70
+    temperature_critical: 85
+    packet_loss_normal: [0.0, 0.01]
+    packet_loss_warning: 0.03
+    packet_loss_critical: 0.10
+
+# ---- Analytics / Forecasting ----
+analytics:
+  feature_windows: [5, 15, 30, 60]  # rolling window sizes in minutes
+  forecast_horizon_minutes: 60
+  failure_probability_threshold: 0.65
+  anomaly_confidence_boost: 0.15
+  model_type: "random_forest"  # random_forest | xgboost | arima
+  retrain_interval_minutes: 120
+
+# ---- RAG Settings ----
+rag:
+  chunk_size_tokens: 400
+  chunk_overlap_tokens: 50
+  top_k: 5
+  embedding_model_name: "all-MiniLM-L6-v2"
+  min_retrieval_score: 0.35
+
+# ---- LLM Settings ----
+llm:
+  model_path: "models/llm/model.gguf"
+  context_length: 4096
+  max_tokens: 1024
+  temperature: 0.2
+  top_p: 0.9
+  repeat_penalty: 1.1
+  n_threads: 4  # adjust per target hardware
+
+# ---- MLS / Security ----
+mls:
+  enabled: true
+  classification_levels:
+    - UNCLASSIFIED
+    - RESTRICTED
+    - CONFIDENTIAL
+  default_operator_clearance: "RESTRICTED"
+
+# ---- Dashboard ----
+dashboard:
+  page_title: "ISRO NetOps Predictive Co-Pilot"
+  refresh_interval_seconds: 5
+  theme: "dark"

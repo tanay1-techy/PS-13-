@@ -1,0 +1,1250 @@
+[
+  {
+    "chunk_id": "RB-101_chunk_0",
+    "text": "# RB-101: High CPU Utilization on Network Devices",
+    "section": "RB-101: High CPU Utilization on Network Devices",
+    "token_estimate": 12,
+    "runbook_id": "RB-101",
+    "title": "RB-101: High CPU Utilization on Network Devices",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Firewall"
+    ],
+    "fault_category": "Performance Degradation",
+    "source_file": "RB-101-high-cpu.md"
+  },
+  {
+    "chunk_id": "RB-101_chunk_1",
+    "text": "## Classification: RESTRICTED",
+    "section": "Classification: RESTRICTED",
+    "token_estimate": 7,
+    "runbook_id": "RB-101",
+    "title": "RB-101: High CPU Utilization on Network Devices",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Firewall"
+    ],
+    "fault_category": "Performance Degradation",
+    "source_file": "RB-101-high-cpu.md"
+  },
+  {
+    "chunk_id": "RB-101_chunk_2",
+    "text": "## Applicable Devices: Router, Switch, Firewall",
+    "section": "Applicable Devices: Router, Switch, Firewall",
+    "token_estimate": 11,
+    "runbook_id": "RB-101",
+    "title": "RB-101: High CPU Utilization on Network Devices",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Firewall"
+    ],
+    "fault_category": "Performance Degradation",
+    "source_file": "RB-101-high-cpu.md"
+  },
+  {
+    "chunk_id": "RB-101_chunk_3",
+    "text": "## Fault Category: Performance Degradation",
+    "section": "Fault Category: Performance Degradation",
+    "token_estimate": 10,
+    "runbook_id": "RB-101",
+    "title": "RB-101: High CPU Utilization on Network Devices",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Firewall"
+    ],
+    "fault_category": "Performance Degradation",
+    "source_file": "RB-101-high-cpu.md"
+  },
+  {
+    "chunk_id": "RB-101_chunk_4",
+    "text": "### Symptoms\n- CPU utilization consistently above 80% for more than 5 minutes\n- Slow CLI response on the device\n- Delayed routing protocol convergence\n- SNMP timeout errors from monitoring systems",
+    "section": "Symptoms",
+    "token_estimate": 49,
+    "runbook_id": "RB-101",
+    "title": "RB-101: High CPU Utilization on Network Devices",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Firewall"
+    ],
+    "fault_category": "Performance Degradation",
+    "source_file": "RB-101-high-cpu.md"
+  },
+  {
+    "chunk_id": "RB-101_chunk_5",
+    "text": "### Diagnosis Steps\n1. **Identify the process consuming CPU**: Run `show processes cpu sorted` (Cisco) or `show system processes extensive` (Juniper) to identify the top CPU-consuming process.\n2. **Check for control-plane floods**: Examine `show control-plane host open-ports` and look for unusually high packet rates hitting the CPU.\n3. **Review BGP/OSPF activity**: A route flap storm can cause sustained CPU spikes. Check `show bgp summary` for high message counts or frequent state changes.\n4. **Check for ACL logging**: Excessive ACL log entries can drive up CPU. Review `show access-lists` for counters on log-enabled entries.\n5. **Inspect ARP/ND tables**: An ARP storm from a misconfigured host can overwhelm CPU. Check `show arp` for abnormal entry counts.",
+    "section": "Diagnosis Steps",
+    "token_estimate": 191,
+    "runbook_id": "RB-101",
+    "title": "RB-101: High CPU Utilization on Network Devices",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Firewall"
+    ],
+    "fault_category": "Performance Degradation",
+    "source_file": "RB-101-high-cpu.md"
+  },
+  {
+    "chunk_id": "RB-101_chunk_6",
+    "text": "### Remediation\n1. **Immediate**: Apply CoPP (Control Plane Policing) to rate-limit punted traffic: `policy-map control-plane-policy` with appropriate rate limits.\n2. **Short-term**: If a specific process is the culprit (e.g., SNMP polling), adjust the polling interval or disable verbose SNMP walks.\n3. **Medium-term**: Upgrade device firmware if a known CPU bug is identified. Check vendor advisory database.\n4. **Preventive**: Set up SNMP traps for CPU thresholds at 70% (warning) and 85% (critical). Configure automated script to collect diagnostics when threshold is breached.",
+    "section": "Remediation",
+    "token_estimate": 145,
+    "runbook_id": "RB-101",
+    "title": "RB-101: High CPU Utilization on Network Devices",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Firewall"
+    ],
+    "fault_category": "Performance Degradation",
+    "source_file": "RB-101-high-cpu.md"
+  },
+  {
+    "chunk_id": "RB-101_chunk_7",
+    "text": "### Escalation\nIf CPU remains above 90% after CoPP and process remediation, escalate to Network Engineering L3 team with diagnostics bundle attached.\n\n---",
+    "section": "Escalation",
+    "token_estimate": 38,
+    "runbook_id": "RB-101",
+    "title": "RB-101: High CPU Utilization on Network Devices",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Firewall"
+    ],
+    "fault_category": "Performance Degradation",
+    "source_file": "RB-101-high-cpu.md"
+  },
+  {
+    "chunk_id": "RB-102_chunk_0",
+    "text": "# RB-102: Interface CRC Error Flapping",
+    "section": "RB-102: Interface CRC Error Flapping",
+    "token_estimate": 9,
+    "runbook_id": "RB-102",
+    "title": "RB-102: Interface CRC Error Flapping",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch"
+    ],
+    "fault_category": "Link Integrity",
+    "source_file": "RB-102-crc-error-flapping.md"
+  },
+  {
+    "chunk_id": "RB-102_chunk_1",
+    "text": "## Classification: UNCLASSIFIED",
+    "section": "Classification: UNCLASSIFIED",
+    "token_estimate": 7,
+    "runbook_id": "RB-102",
+    "title": "RB-102: Interface CRC Error Flapping",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch"
+    ],
+    "fault_category": "Link Integrity",
+    "source_file": "RB-102-crc-error-flapping.md"
+  },
+  {
+    "chunk_id": "RB-102_chunk_2",
+    "text": "## Applicable Devices: Router, Switch",
+    "section": "Applicable Devices: Router, Switch",
+    "token_estimate": 9,
+    "runbook_id": "RB-102",
+    "title": "RB-102: Interface CRC Error Flapping",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch"
+    ],
+    "fault_category": "Link Integrity",
+    "source_file": "RB-102-crc-error-flapping.md"
+  },
+  {
+    "chunk_id": "RB-102_chunk_3",
+    "text": "## Fault Category: Link Integrity",
+    "section": "Fault Category: Link Integrity",
+    "token_estimate": 8,
+    "runbook_id": "RB-102",
+    "title": "RB-102: Interface CRC Error Flapping",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch"
+    ],
+    "fault_category": "Link Integrity",
+    "source_file": "RB-102-crc-error-flapping.md"
+  },
+  {
+    "chunk_id": "RB-102_chunk_4",
+    "text": "### Symptoms\n- Rising CRC error counters on one or more interfaces\n- Interface cycling between UP and DOWN states (link flapping)\n- Intermittent packet loss on affected circuits\n- Syslog messages: `INTERFACE: GigabitEthernet0/X CRC errors: N in last 60s`",
+    "section": "Symptoms",
+    "token_estimate": 63,
+    "runbook_id": "RB-102",
+    "title": "RB-102: Interface CRC Error Flapping",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch"
+    ],
+    "fault_category": "Link Integrity",
+    "source_file": "RB-102-crc-error-flapping.md"
+  },
+  {
+    "chunk_id": "RB-102_chunk_5",
+    "text": "### Diagnosis Steps\n1. **Check error counters**: Run `show interface GigabitEthernetX/Y` and note CRC, input errors, runts, and giants counters. Record values and re-check after 5 minutes to confirm active growth.\n2. **Inspect physical layer**: CRC errors typically indicate Layer 1 problems:\n   - Damaged or kinked fiber/copper cable\n   - Dirty or misaligned SFP/GBIC transceivers\n   - Excessive cable length beyond specification\n   - Electromagnetic interference (EMI) from adjacent power cables\n3. **Check SFP diagnostics**: Run `show interface transceiver` to review optical power levels (Tx/Rx dBm). Acceptable range is typically -1 to -10 dBm for short-range SFPs.\n4. **Review recent changes**: Check change log for recent cable moves, SFP replacements, or adjacent construction work.\n5. **Test with known-good cable/SFP**: Swap the cable and/or transceiver module with verified working spares to isolate the component.",
+    "section": "Diagnosis Steps",
+    "token_estimate": 231,
+    "runbook_id": "RB-102",
+    "title": "RB-102: Interface CRC Error Flapping",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch"
+    ],
+    "fault_category": "Link Integrity",
+    "source_file": "RB-102-crc-error-flapping.md"
+  },
+  {
+    "chunk_id": "RB-102_chunk_6",
+    "text": "### Remediation\n1. **Immediate**: If link is flapping, apply `dampening 5 1000 2000 20` on the interface to suppress rapid state changes and protect routing stability.\n2. **Cable replacement**: If CRC errors correlate with cable degradation, replace the patch cable and cross-connect. Use certified Cat6A or single-mode fiber as appropriate.\n3. **SFP replacement**: If transceiver power levels are outside specification, replace the SFP module. Use vendor-approved optics only.\n4. **Clean connectors**: For fiber connections, clean both ends with IPA wipes and inspect with a fiber scope before reconnecting.\n5. **EMI mitigation**: If interference is suspected, reroute cables away from power runs and use shielded cabling.",
+    "section": "Remediation",
+    "token_estimate": 180,
+    "runbook_id": "RB-102",
+    "title": "RB-102: Interface CRC Error Flapping",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch"
+    ],
+    "fault_category": "Link Integrity",
+    "source_file": "RB-102-crc-error-flapping.md"
+  },
+  {
+    "chunk_id": "RB-102_chunk_7",
+    "text": "### Escalation\nIf errors persist after cable and SFP replacement, escalate to Physical Infrastructure team for end-to-end fiber/copper testing with OTDR/cable analyzer.\n\n---",
+    "section": "Escalation",
+    "token_estimate": 43,
+    "runbook_id": "RB-102",
+    "title": "RB-102: Interface CRC Error Flapping",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch"
+    ],
+    "fault_category": "Link Integrity",
+    "source_file": "RB-102-crc-error-flapping.md"
+  },
+  {
+    "chunk_id": "RB-103_chunk_0",
+    "text": "# RB-103: Memory Leak Detection and Mitigation",
+    "section": "RB-103: Memory Leak Detection and Mitigation",
+    "token_estimate": 11,
+    "runbook_id": "RB-103",
+    "title": "RB-103: Memory Leak Detection and Mitigation",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Server",
+      "Router",
+      "Switch"
+    ],
+    "fault_category": "Resource Exhaustion",
+    "source_file": "RB-103-memory-leak.md"
+  },
+  {
+    "chunk_id": "RB-103_chunk_1",
+    "text": "## Classification: RESTRICTED",
+    "section": "Classification: RESTRICTED",
+    "token_estimate": 7,
+    "runbook_id": "RB-103",
+    "title": "RB-103: Memory Leak Detection and Mitigation",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Server",
+      "Router",
+      "Switch"
+    ],
+    "fault_category": "Resource Exhaustion",
+    "source_file": "RB-103-memory-leak.md"
+  },
+  {
+    "chunk_id": "RB-103_chunk_2",
+    "text": "## Applicable Devices: Server, Router, Switch",
+    "section": "Applicable Devices: Server, Router, Switch",
+    "token_estimate": 11,
+    "runbook_id": "RB-103",
+    "title": "RB-103: Memory Leak Detection and Mitigation",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Server",
+      "Router",
+      "Switch"
+    ],
+    "fault_category": "Resource Exhaustion",
+    "source_file": "RB-103-memory-leak.md"
+  },
+  {
+    "chunk_id": "RB-103_chunk_3",
+    "text": "## Fault Category: Resource Exhaustion",
+    "section": "Fault Category: Resource Exhaustion",
+    "token_estimate": 9,
+    "runbook_id": "RB-103",
+    "title": "RB-103: Memory Leak Detection and Mitigation",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Server",
+      "Router",
+      "Switch"
+    ],
+    "fault_category": "Resource Exhaustion",
+    "source_file": "RB-103-memory-leak.md"
+  },
+  {
+    "chunk_id": "RB-103_chunk_4",
+    "text": "### Symptoms\n- Steadily increasing memory usage without corresponding workload increase\n- Process RSS (Resident Set Size) growing over time\n- OOM (Out-of-Memory) killer events in kernel logs\n- Degraded application response times\n- Syslog: `KERNEL: Out-of-memory score adjusted for PID XXXX`",
+    "section": "Symptoms",
+    "token_estimate": 72,
+    "runbook_id": "RB-103",
+    "title": "RB-103: Memory Leak Detection and Mitigation",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Server",
+      "Router",
+      "Switch"
+    ],
+    "fault_category": "Resource Exhaustion",
+    "source_file": "RB-103-memory-leak.md"
+  },
+  {
+    "chunk_id": "RB-103_chunk_5",
+    "text": "### Diagnosis Steps\n1. **Identify leaking process**: Run `top -o %MEM` or `ps aux --sort=-%mem | head -20` to find processes with abnormally high memory usage.\n2. **Track memory growth**: Use `pidstat -r -p <PID> 60 10` to sample memory usage every 60 seconds for 10 iterations. A consistently increasing RSS confirms a leak.\n3. **Check system-wide memory**: Run `free -h` and `cat /proc/meminfo` to assess total/available/swap usage.\n4. **Review application logs**: Check the suspect process's log files for memory allocation warnings or buffer growth messages.\n5. **Inspect slab cache**: Run `slabtop` to check if kernel slab allocations are growing (indicates kernel-level leak).",
+    "section": "Diagnosis Steps",
+    "token_estimate": 170,
+    "runbook_id": "RB-103",
+    "title": "RB-103: Memory Leak Detection and Mitigation",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Server",
+      "Router",
+      "Switch"
+    ],
+    "fault_category": "Resource Exhaustion",
+    "source_file": "RB-103-memory-leak.md"
+  },
+  {
+    "chunk_id": "RB-103_chunk_6",
+    "text": "### Remediation\n1. **Immediate (if critical)**: Restart the affected service: `systemctl restart <service-name>`. This reclaims leaked memory but is a temporary fix.\n2. **Short-term**: Set memory cgroup limits to prevent a single process from exhausting system memory: `systemctl set-property <service>.service MemoryMax=4G`\n3. **Medium-term**: Report the leak to the application development team with evidence (PID, RSS growth timeline, heap dumps if available).\n4. **Preventive**:\n   - Configure OOM score adjustments to protect critical processes: `echo -1000 > /proc/<PID>/oom_score_adj`\n   - Set up automated monitoring alerts when RSS exceeds 80% of limit\n   - Schedule periodic service restarts during maintenance windows if no fix is available",
+    "section": "Remediation",
+    "token_estimate": 187,
+    "runbook_id": "RB-103",
+    "title": "RB-103: Memory Leak Detection and Mitigation",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Server",
+      "Router",
+      "Switch"
+    ],
+    "fault_category": "Resource Exhaustion",
+    "source_file": "RB-103-memory-leak.md"
+  },
+  {
+    "chunk_id": "RB-103_chunk_7",
+    "text": "### Escalation\nIf memory leak is in a vendor-provided application, open a support case with memory growth evidence. If in-house, escalate to Application Engineering with heap dump attached.\n\n---",
+    "section": "Escalation",
+    "token_estimate": 48,
+    "runbook_id": "RB-103",
+    "title": "RB-103: Memory Leak Detection and Mitigation",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Server",
+      "Router",
+      "Switch"
+    ],
+    "fault_category": "Resource Exhaustion",
+    "source_file": "RB-103-memory-leak.md"
+  },
+  {
+    "chunk_id": "RB-104_chunk_0",
+    "text": "# RB-104: Thermal Throttling and Overheating",
+    "section": "RB-104: Thermal Throttling and Overheating",
+    "token_estimate": 11,
+    "runbook_id": "RB-104",
+    "title": "RB-104: Thermal Throttling and Overheating",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server"
+    ],
+    "fault_category": "Environmental / Hardware",
+    "source_file": "RB-104-thermal-throttling.md"
+  },
+  {
+    "chunk_id": "RB-104_chunk_1",
+    "text": "## Classification: UNCLASSIFIED",
+    "section": "Classification: UNCLASSIFIED",
+    "token_estimate": 7,
+    "runbook_id": "RB-104",
+    "title": "RB-104: Thermal Throttling and Overheating",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server"
+    ],
+    "fault_category": "Environmental / Hardware",
+    "source_file": "RB-104-thermal-throttling.md"
+  },
+  {
+    "chunk_id": "RB-104_chunk_2",
+    "text": "## Applicable Devices: Router, Switch, Server",
+    "section": "Applicable Devices: Router, Switch, Server",
+    "token_estimate": 11,
+    "runbook_id": "RB-104",
+    "title": "RB-104: Thermal Throttling and Overheating",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server"
+    ],
+    "fault_category": "Environmental / Hardware",
+    "source_file": "RB-104-thermal-throttling.md"
+  },
+  {
+    "chunk_id": "RB-104_chunk_3",
+    "text": "## Fault Category: Environmental / Hardware",
+    "section": "Fault Category: Environmental / Hardware",
+    "token_estimate": 10,
+    "runbook_id": "RB-104",
+    "title": "RB-104: Thermal Throttling and Overheating",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server"
+    ],
+    "fault_category": "Environmental / Hardware",
+    "source_file": "RB-104-thermal-throttling.md"
+  },
+  {
+    "chunk_id": "RB-104_chunk_4",
+    "text": "### Symptoms\n- CPU frequency reduced below base clock (thermal throttling)\n- Fan speed alarms or fan failure events\n- Temperature sensor warnings exceeding 70\u00b0C threshold\n- Syslog: `ENVMON: Temperature sensor X: Y\u00b0C (warning threshold: 70\u00b0C)`\n- Degraded throughput despite low logical utilization",
+    "section": "Symptoms",
+    "token_estimate": 74,
+    "runbook_id": "RB-104",
+    "title": "RB-104: Thermal Throttling and Overheating",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server"
+    ],
+    "fault_category": "Environmental / Hardware",
+    "source_file": "RB-104-thermal-throttling.md"
+  },
+  {
+    "chunk_id": "RB-104_chunk_5",
+    "text": "### Diagnosis Steps\n1. **Check temperature sensors**: Run `show environment temperature` (network device) or `ipmitool sdr type temperature` (server) to get current readings from all sensors.\n2. **Check fan status**: Run `show environment fan` or `ipmitool sdr type fan` to verify all fans are operational and at expected RPM.\n3. **Review ambient conditions**: Check data center environmental monitoring (DCIM) for room temperature, hot/cold aisle containment breaches, or CRAC unit failures.\n4. **Inspect airflow**: Verify that blanking panels are installed, no cable obstructions block airflow, and hot/cold aisles are properly contained.\n5. **Check recent changes**: New high-density equipment installed nearby can create localized hot spots.",
+    "section": "Diagnosis Steps",
+    "token_estimate": 186,
+    "runbook_id": "RB-104",
+    "title": "RB-104: Thermal Throttling and Overheating",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server"
+    ],
+    "fault_category": "Environmental / Hardware",
+    "source_file": "RB-104-thermal-throttling.md"
+  },
+  {
+    "chunk_id": "RB-104_chunk_6",
+    "text": "### Remediation\n1. **Immediate (critical temp > 85\u00b0C)**: Reduce load on the device. Shift traffic to redundant paths if available. Consider controlled shutdown to prevent hardware damage.\n2. **Fan failure**: Replace failed fan module. Most modern devices support hot-swap fan replacement. Keep spare fan modules in the data center inventory.\n3. **Airflow correction**:\n   - Install blanking panels in empty rack units\n   - Verify hot/cold aisle containment is intact\n   - Clear any cable obstructions from device intake/exhaust\n4. **Ambient temperature**: Coordinate with Facilities to check CRAC/CRAH units. Temporary portable cooling may be needed for acute situations.\n5. **Preventive**:\n   - Set temperature warning threshold at 65\u00b0C and critical at 80\u00b0C\n   - Implement automated load shedding when temperature exceeds warning threshold\n   - Schedule quarterly thermal audits of the data center",
+    "section": "Remediation",
+    "token_estimate": 224,
+    "runbook_id": "RB-104",
+    "title": "RB-104: Thermal Throttling and Overheating",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server"
+    ],
+    "fault_category": "Environmental / Hardware",
+    "source_file": "RB-104-thermal-throttling.md"
+  },
+  {
+    "chunk_id": "RB-104_chunk_7",
+    "text": "### Escalation\nIf temperature cannot be reduced below warning threshold after airflow and fan remediation, escalate to Facilities Management and consider emergency workload migration.\n\n---",
+    "section": "Escalation",
+    "token_estimate": 47,
+    "runbook_id": "RB-104",
+    "title": "RB-104: Thermal Throttling and Overheating",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server"
+    ],
+    "fault_category": "Environmental / Hardware",
+    "source_file": "RB-104-thermal-throttling.md"
+  },
+  {
+    "chunk_id": "RB-105_chunk_0",
+    "text": "# RB-105: BGP Session Failure and Recovery",
+    "section": "RB-105: BGP Session Failure and Recovery",
+    "token_estimate": 10,
+    "runbook_id": "RB-105",
+    "title": "RB-105: BGP Session Failure and Recovery",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router"
+    ],
+    "fault_category": "Routing Protocol",
+    "source_file": "RB-105-bgp-session-failure.md"
+  },
+  {
+    "chunk_id": "RB-105_chunk_1",
+    "text": "## Classification: RESTRICTED",
+    "section": "Classification: RESTRICTED",
+    "token_estimate": 7,
+    "runbook_id": "RB-105",
+    "title": "RB-105: BGP Session Failure and Recovery",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router"
+    ],
+    "fault_category": "Routing Protocol",
+    "source_file": "RB-105-bgp-session-failure.md"
+  },
+  {
+    "chunk_id": "RB-105_chunk_2",
+    "text": "## Applicable Devices: Router",
+    "section": "Applicable Devices: Router",
+    "token_estimate": 7,
+    "runbook_id": "RB-105",
+    "title": "RB-105: BGP Session Failure and Recovery",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router"
+    ],
+    "fault_category": "Routing Protocol",
+    "source_file": "RB-105-bgp-session-failure.md"
+  },
+  {
+    "chunk_id": "RB-105_chunk_3",
+    "text": "## Fault Category: Routing Protocol",
+    "section": "Fault Category: Routing Protocol",
+    "token_estimate": 8,
+    "runbook_id": "RB-105",
+    "title": "RB-105: BGP Session Failure and Recovery",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router"
+    ],
+    "fault_category": "Routing Protocol",
+    "source_file": "RB-105-bgp-session-failure.md"
+  },
+  {
+    "chunk_id": "RB-105_chunk_4",
+    "text": "### Symptoms\n- BGP neighbor state changed from Established to Idle/Active\n- Route withdrawal causing traffic blackholing\n- Syslog: `BGP: Neighbor X.X.X.X session RESET by peer`\n- Increased latency or unreachability to downstream networks",
+    "section": "Symptoms",
+    "token_estimate": 59,
+    "runbook_id": "RB-105",
+    "title": "RB-105: BGP Session Failure and Recovery",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router"
+    ],
+    "fault_category": "Routing Protocol",
+    "source_file": "RB-105-bgp-session-failure.md"
+  },
+  {
+    "chunk_id": "RB-105_chunk_5",
+    "text": "### Diagnosis Steps\n1. **Check BGP neighbor status**: Run `show bgp summary` to identify which peers are down and their uptime/state.\n2. **Review hold-timer expiry**: If the session dropped due to hold-timer expiry, check for CPU overload or interface issues preventing keepalive exchange.\n3. **Verify TCP connectivity**: Ping the peer's BGP source address. Traceroute to confirm the path is intact.\n4. **Check for prefix limit exceeded**: `show bgp neighbor X.X.X.X` \u2014 if max-prefix limit was hit, the session was administratively shut down.\n5. **Review route policy changes**: Recent route-map or prefix-list modifications may have caused the peer to reset.\n6. **Check authentication**: If MD5 authentication is configured, verify keys match on both sides.",
+    "section": "Diagnosis Steps",
+    "token_estimate": 189,
+    "runbook_id": "RB-105",
+    "title": "RB-105: BGP Session Failure and Recovery",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router"
+    ],
+    "fault_category": "Routing Protocol",
+    "source_file": "RB-105-bgp-session-failure.md"
+  },
+  {
+    "chunk_id": "RB-105_chunk_6",
+    "text": "### Remediation\n1. **Immediate**: If prefix-limit was exceeded, increase the limit or apply more specific filters: `neighbor X.X.X.X maximum-prefix <new-limit> warning-only`\n2. **Session reset**: Clear the BGP session: `clear bgp neighbor X.X.X.X soft` (soft reset preferred to avoid route churn).\n3. **Authentication mismatch**: Coordinate with the peer operator to verify and re-sync MD5 keys.\n4. **TCP path failure**: If the underlying path is broken, engage the transport/MPLS team to restore connectivity.\n5. **Preventive**: Enable BFD (Bidirectional Forwarding Detection) for sub-second failure detection: `neighbor X.X.X.X fall-over bfd`",
+    "section": "Remediation",
+    "token_estimate": 161,
+    "runbook_id": "RB-105",
+    "title": "RB-105: BGP Session Failure and Recovery",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router"
+    ],
+    "fault_category": "Routing Protocol",
+    "source_file": "RB-105-bgp-session-failure.md"
+  },
+  {
+    "chunk_id": "RB-105_chunk_7",
+    "text": "### Escalation\nIf BGP session cannot be re-established after basic troubleshooting, engage the peering team and the remote AS operator.\n\n---",
+    "section": "Escalation",
+    "token_estimate": 35,
+    "runbook_id": "RB-105",
+    "title": "RB-105: BGP Session Failure and Recovery",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router"
+    ],
+    "fault_category": "Routing Protocol",
+    "source_file": "RB-105-bgp-session-failure.md"
+  },
+  {
+    "chunk_id": "RB-106_chunk_0",
+    "text": "# RB-106: Packet Loss and Network Congestion",
+    "section": "RB-106: Packet Loss and Network Congestion",
+    "token_estimate": 11,
+    "runbook_id": "RB-106",
+    "title": "RB-106: Packet Loss and Network Congestion",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Firewall"
+    ],
+    "fault_category": "Performance Degradation",
+    "source_file": "RB-106-packet-loss.md"
+  },
+  {
+    "chunk_id": "RB-106_chunk_1",
+    "text": "## Classification: UNCLASSIFIED",
+    "section": "Classification: UNCLASSIFIED",
+    "token_estimate": 7,
+    "runbook_id": "RB-106",
+    "title": "RB-106: Packet Loss and Network Congestion",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Firewall"
+    ],
+    "fault_category": "Performance Degradation",
+    "source_file": "RB-106-packet-loss.md"
+  },
+  {
+    "chunk_id": "RB-106_chunk_2",
+    "text": "## Applicable Devices: Router, Switch, Firewall",
+    "section": "Applicable Devices: Router, Switch, Firewall",
+    "token_estimate": 11,
+    "runbook_id": "RB-106",
+    "title": "RB-106: Packet Loss and Network Congestion",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Firewall"
+    ],
+    "fault_category": "Performance Degradation",
+    "source_file": "RB-106-packet-loss.md"
+  },
+  {
+    "chunk_id": "RB-106_chunk_3",
+    "text": "## Fault Category: Performance Degradation",
+    "section": "Fault Category: Performance Degradation",
+    "token_estimate": 10,
+    "runbook_id": "RB-106",
+    "title": "RB-106: Packet Loss and Network Congestion",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Firewall"
+    ],
+    "fault_category": "Performance Degradation",
+    "source_file": "RB-106-packet-loss.md"
+  },
+  {
+    "chunk_id": "RB-106_chunk_4",
+    "text": "### Symptoms\n- Packet loss exceeding 1% on monitored interfaces\n- QoS queue tail-drops or WRED drops increasing\n- Application latency complaints from end users\n- SNMP: rising `ifOutDiscards` or `ifOutErrors` counters",
+    "section": "Symptoms",
+    "token_estimate": 54,
+    "runbook_id": "RB-106",
+    "title": "RB-106: Packet Loss and Network Congestion",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Firewall"
+    ],
+    "fault_category": "Performance Degradation",
+    "source_file": "RB-106-packet-loss.md"
+  },
+  {
+    "chunk_id": "RB-106_chunk_5",
+    "text": "### Diagnosis Steps\n1. **Identify congested interfaces**: Run `show interface` and check for output drops, queue drops, and utilization percentage. An interface consistently above 80% utilization is congested.\n2. **Check QoS policy**: Run `show policy-map interface` to see per-class traffic statistics. Identify which traffic class is experiencing drops.\n3. **Review traffic patterns**: Use NetFlow or sFlow data to identify top talkers and unexpected traffic spikes.\n4. **Check for broadcast storms**: Look for excessive broadcast/multicast traffic: `show interface counters broadcast`.\n5. **Verify MTU settings**: MTU mismatches cause fragmentation and increased drop rates. Confirm end-to-end MTU consistency.",
+    "section": "Diagnosis Steps",
+    "token_estimate": 178,
+    "runbook_id": "RB-106",
+    "title": "RB-106: Packet Loss and Network Congestion",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Firewall"
+    ],
+    "fault_category": "Performance Degradation",
+    "source_file": "RB-106-packet-loss.md"
+  },
+  {
+    "chunk_id": "RB-106_chunk_6",
+    "text": "### Remediation\n1. **Immediate**: Identify and rate-limit offending traffic flows using ACLs or QoS policers.\n2. **QoS tuning**: Adjust bandwidth allocations in the QoS policy to prioritize mission-critical traffic (voice, telemetry, control-plane).\n3. **Capacity augmentation**: If sustained congestion, engage capacity planning for link upgrade or LAG expansion.\n4. **Broadcast storm control**: Enable storm-control on access ports: `storm-control broadcast level 5.00 1.00`\n5. **ECMP/load balancing**: Distribute traffic across multiple equal-cost paths if available.",
+    "section": "Remediation",
+    "token_estimate": 142,
+    "runbook_id": "RB-106",
+    "title": "RB-106: Packet Loss and Network Congestion",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Firewall"
+    ],
+    "fault_category": "Performance Degradation",
+    "source_file": "RB-106-packet-loss.md"
+  },
+  {
+    "chunk_id": "RB-106_chunk_7",
+    "text": "### Escalation\nIf packet loss persists after QoS remediation, escalate to Network Architecture team for capacity planning review.\n\n---",
+    "section": "Escalation",
+    "token_estimate": 33,
+    "runbook_id": "RB-106",
+    "title": "RB-106: Packet Loss and Network Congestion",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Firewall"
+    ],
+    "fault_category": "Performance Degradation",
+    "source_file": "RB-106-packet-loss.md"
+  },
+  {
+    "chunk_id": "RB-107_chunk_0",
+    "text": "# RB-107: Power Supply Unit (PSU) Failure",
+    "section": "RB-107: Power Supply Unit (PSU) Failure",
+    "token_estimate": 10,
+    "runbook_id": "RB-107",
+    "title": "RB-107: Power Supply Unit (PSU) Failure",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server",
+      "Firewall"
+    ],
+    "fault_category": "Hardware Failure",
+    "source_file": "RB-107-psu-failure.md"
+  },
+  {
+    "chunk_id": "RB-107_chunk_1",
+    "text": "## Classification: UNCLASSIFIED",
+    "section": "Classification: UNCLASSIFIED",
+    "token_estimate": 7,
+    "runbook_id": "RB-107",
+    "title": "RB-107: Power Supply Unit (PSU) Failure",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server",
+      "Firewall"
+    ],
+    "fault_category": "Hardware Failure",
+    "source_file": "RB-107-psu-failure.md"
+  },
+  {
+    "chunk_id": "RB-107_chunk_2",
+    "text": "## Applicable Devices: Router, Switch, Server, Firewall",
+    "section": "Applicable Devices: Router, Switch, Server, Firewall",
+    "token_estimate": 13,
+    "runbook_id": "RB-107",
+    "title": "RB-107: Power Supply Unit (PSU) Failure",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server",
+      "Firewall"
+    ],
+    "fault_category": "Hardware Failure",
+    "source_file": "RB-107-psu-failure.md"
+  },
+  {
+    "chunk_id": "RB-107_chunk_3",
+    "text": "## Fault Category: Hardware Failure",
+    "section": "Fault Category: Hardware Failure",
+    "token_estimate": 8,
+    "runbook_id": "RB-107",
+    "title": "RB-107: Power Supply Unit (PSU) Failure",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server",
+      "Firewall"
+    ],
+    "fault_category": "Hardware Failure",
+    "source_file": "RB-107-psu-failure.md"
+  },
+  {
+    "chunk_id": "RB-107_chunk_4",
+    "text": "### Symptoms\n- PSU status alarm (amber LED on chassis)\n- Voltage fluctuation alerts from environmental monitoring\n- Syslog: `HARDWARE: PSU X voltage fluctuation detected`\n- Redundant PSU taking full load (single point of failure condition)",
+    "section": "Symptoms",
+    "token_estimate": 59,
+    "runbook_id": "RB-107",
+    "title": "RB-107: Power Supply Unit (PSU) Failure",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server",
+      "Firewall"
+    ],
+    "fault_category": "Hardware Failure",
+    "source_file": "RB-107-psu-failure.md"
+  },
+  {
+    "chunk_id": "RB-107_chunk_5",
+    "text": "### Diagnosis Steps\n1. **Check PSU status**: Run `show environment power` or `ipmitool sdr type voltage` to identify which PSU is failed/degraded.\n2. **Verify load distribution**: Confirm whether the remaining PSU can handle the full chassis load. Check power budget vs actual draw.\n3. **Inspect physical indicators**: Check PSU LED status on the chassis (green = OK, amber = warning, red = failure).\n4. **Review power circuit**: Verify the power feed (UPS, PDU) for the failed PSU is operational. Check for tripped breakers.\n5. **Check event history**: Review `show environment power history` for intermittent failures that may indicate a developing fault.",
+    "section": "Diagnosis Steps",
+    "token_estimate": 164,
+    "runbook_id": "RB-107",
+    "title": "RB-107: Power Supply Unit (PSU) Failure",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server",
+      "Firewall"
+    ],
+    "fault_category": "Hardware Failure",
+    "source_file": "RB-107-psu-failure.md"
+  },
+  {
+    "chunk_id": "RB-107_chunk_6",
+    "text": "### Remediation\n1. **Immediate**: If only one PSU remains, declare a maintenance risk and schedule emergency replacement. Do NOT perform any other maintenance on the device until redundancy is restored.\n2. **PSU replacement**: Hot-swap the failed PSU module (most enterprise devices support hot-swap). Use exact-match replacement part.\n3. **Power circuit**: If the PSU is operational but voltage is fluctuating, check the PDU output and UPS status. Relocate to a different power circuit if needed.\n4. **Preventive**: Maintain spare PSU inventory per device model. Set up SNMP traps for PSU state changes.",
+    "section": "Remediation",
+    "token_estimate": 151,
+    "runbook_id": "RB-107",
+    "title": "RB-107: Power Supply Unit (PSU) Failure",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server",
+      "Firewall"
+    ],
+    "fault_category": "Hardware Failure",
+    "source_file": "RB-107-psu-failure.md"
+  },
+  {
+    "chunk_id": "RB-107_chunk_7",
+    "text": "### Escalation\nIf replacement PSU also fails, suspect a backplane power distribution issue and escalate to Hardware Engineering with full environmental data.\n\n---",
+    "section": "Escalation",
+    "token_estimate": 40,
+    "runbook_id": "RB-107",
+    "title": "RB-107: Power Supply Unit (PSU) Failure",
+    "classification": "UNCLASSIFIED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server",
+      "Firewall"
+    ],
+    "fault_category": "Hardware Failure",
+    "source_file": "RB-107-psu-failure.md"
+  },
+  {
+    "chunk_id": "RB-108_chunk_0",
+    "text": "# RB-108: Firewall Session Table Exhaustion",
+    "section": "RB-108: Firewall Session Table Exhaustion",
+    "token_estimate": 10,
+    "runbook_id": "RB-108",
+    "title": "RB-108: Firewall Session Table Exhaustion",
+    "classification": "CONFIDENTIAL",
+    "applicable_devices": [
+      "Firewall"
+    ],
+    "fault_category": "Security / Resource Exhaustion",
+    "source_file": "RB-108-firewall-session-exhaustion.md"
+  },
+  {
+    "chunk_id": "RB-108_chunk_1",
+    "text": "## Classification: CONFIDENTIAL",
+    "section": "Classification: CONFIDENTIAL",
+    "token_estimate": 7,
+    "runbook_id": "RB-108",
+    "title": "RB-108: Firewall Session Table Exhaustion",
+    "classification": "CONFIDENTIAL",
+    "applicable_devices": [
+      "Firewall"
+    ],
+    "fault_category": "Security / Resource Exhaustion",
+    "source_file": "RB-108-firewall-session-exhaustion.md"
+  },
+  {
+    "chunk_id": "RB-108_chunk_2",
+    "text": "## Applicable Devices: Firewall",
+    "section": "Applicable Devices: Firewall",
+    "token_estimate": 7,
+    "runbook_id": "RB-108",
+    "title": "RB-108: Firewall Session Table Exhaustion",
+    "classification": "CONFIDENTIAL",
+    "applicable_devices": [
+      "Firewall"
+    ],
+    "fault_category": "Security / Resource Exhaustion",
+    "source_file": "RB-108-firewall-session-exhaustion.md"
+  },
+  {
+    "chunk_id": "RB-108_chunk_3",
+    "text": "## Fault Category: Security / Resource Exhaustion",
+    "section": "Fault Category: Security / Resource Exhaustion",
+    "token_estimate": 12,
+    "runbook_id": "RB-108",
+    "title": "RB-108: Firewall Session Table Exhaustion",
+    "classification": "CONFIDENTIAL",
+    "applicable_devices": [
+      "Firewall"
+    ],
+    "fault_category": "Security / Resource Exhaustion",
+    "source_file": "RB-108-firewall-session-exhaustion.md"
+  },
+  {
+    "chunk_id": "RB-108_chunk_4",
+    "text": "### Symptoms\n- New connections being dropped by the firewall\n- Session table utilization exceeding 80%\n- Syslog: `FW: Session table approaching limit \u2014 N/M sessions active`\n- Legitimate traffic being denied while existing sessions remain active",
+    "section": "Symptoms",
+    "token_estimate": 61,
+    "runbook_id": "RB-108",
+    "title": "RB-108: Firewall Session Table Exhaustion",
+    "classification": "CONFIDENTIAL",
+    "applicable_devices": [
+      "Firewall"
+    ],
+    "fault_category": "Security / Resource Exhaustion",
+    "source_file": "RB-108-firewall-session-exhaustion.md"
+  },
+  {
+    "chunk_id": "RB-108_chunk_5",
+    "text": "### Diagnosis Steps\n1. **Check session table utilization**: Run `show session info` (Palo Alto) or `get session info` (Fortinet) to see current session count vs maximum.\n2. **Identify session consumers**: Run `show session all filter sort-by byte` to find the top sessions by traffic volume or duration.\n3. **Check for DDoS/scanning**: Look for a single source IP creating thousands of sessions \u2014 indicative of a scan or DDoS attack.\n4. **Review session timeouts**: Excessively long TCP/UDP timeouts can cause stale sessions to accumulate. Check `show session timeout-settings`.\n5. **Verify NAT pool**: If source NAT is in use, check if NAT address exhaustion is contributing to session buildup.",
+    "section": "Diagnosis Steps",
+    "token_estimate": 173,
+    "runbook_id": "RB-108",
+    "title": "RB-108: Firewall Session Table Exhaustion",
+    "classification": "CONFIDENTIAL",
+    "applicable_devices": [
+      "Firewall"
+    ],
+    "fault_category": "Security / Resource Exhaustion",
+    "source_file": "RB-108-firewall-session-exhaustion.md"
+  },
+  {
+    "chunk_id": "RB-108_chunk_6",
+    "text": "### Remediation\n1. **Immediate (attack)**: If a DDoS/scan is identified, create a block rule for the offending source IPs or enable DoS protection profiles.\n2. **Session timeout tuning**: Reduce idle timeouts for non-critical traffic:\n   - TCP: 1800s \u2192 600s for general traffic\n   - UDP: 120s \u2192 30s for DNS\n   - ICMP: 6s (default is usually fine)\n3. **Session table expansion**: If the hardware supports it, increase the maximum session table size.\n4. **Aggressive aging**: Enable aggressive session aging when table utilization exceeds 80%.\n5. **Preventive**: Set up capacity monitoring alerts at 60%, 80%, and 95% session table utilization.",
+    "section": "Remediation",
+    "token_estimate": 160,
+    "runbook_id": "RB-108",
+    "title": "RB-108: Firewall Session Table Exhaustion",
+    "classification": "CONFIDENTIAL",
+    "applicable_devices": [
+      "Firewall"
+    ],
+    "fault_category": "Security / Resource Exhaustion",
+    "source_file": "RB-108-firewall-session-exhaustion.md"
+  },
+  {
+    "chunk_id": "RB-108_chunk_7",
+    "text": "### Escalation\nIf session exhaustion is caused by a sustained DDoS attack, activate the incident response plan and engage the Security Operations Center (SOC).\n\n---",
+    "section": "Escalation",
+    "token_estimate": 41,
+    "runbook_id": "RB-108",
+    "title": "RB-108: Firewall Session Table Exhaustion",
+    "classification": "CONFIDENTIAL",
+    "applicable_devices": [
+      "Firewall"
+    ],
+    "fault_category": "Security / Resource Exhaustion",
+    "source_file": "RB-108-firewall-session-exhaustion.md"
+  },
+  {
+    "chunk_id": "RB-109_chunk_0",
+    "text": "# RB-109: OSPF Neighbor Adjacency Failure",
+    "section": "RB-109: OSPF Neighbor Adjacency Failure",
+    "token_estimate": 10,
+    "runbook_id": "RB-109",
+    "title": "RB-109: OSPF Neighbor Adjacency Failure",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch (Layer 3)"
+    ],
+    "fault_category": "Routing Protocol",
+    "source_file": "RB-109-ospf-adjacency.md"
+  },
+  {
+    "chunk_id": "RB-109_chunk_1",
+    "text": "## Classification: RESTRICTED",
+    "section": "Classification: RESTRICTED",
+    "token_estimate": 7,
+    "runbook_id": "RB-109",
+    "title": "RB-109: OSPF Neighbor Adjacency Failure",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch (Layer 3)"
+    ],
+    "fault_category": "Routing Protocol",
+    "source_file": "RB-109-ospf-adjacency.md"
+  },
+  {
+    "chunk_id": "RB-109_chunk_2",
+    "text": "## Applicable Devices: Router, Switch (Layer 3)",
+    "section": "Applicable Devices: Router, Switch (Layer 3)",
+    "token_estimate": 11,
+    "runbook_id": "RB-109",
+    "title": "RB-109: OSPF Neighbor Adjacency Failure",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch (Layer 3)"
+    ],
+    "fault_category": "Routing Protocol",
+    "source_file": "RB-109-ospf-adjacency.md"
+  },
+  {
+    "chunk_id": "RB-109_chunk_3",
+    "text": "## Fault Category: Routing Protocol",
+    "section": "Fault Category: Routing Protocol",
+    "token_estimate": 8,
+    "runbook_id": "RB-109",
+    "title": "RB-109: OSPF Neighbor Adjacency Failure",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch (Layer 3)"
+    ],
+    "fault_category": "Routing Protocol",
+    "source_file": "RB-109-ospf-adjacency.md"
+  },
+  {
+    "chunk_id": "RB-109_chunk_4",
+    "text": "### Symptoms\n- OSPF neighbor stuck in INIT or 2-WAY state\n- Routes learned via OSPF disappearing from routing table\n- Asymmetric routing causing traffic blackholes\n- Syslog: `OSPF: Neighbor X.X.X.X on interface Y changed state to DOWN`",
+    "section": "Symptoms",
+    "token_estimate": 58,
+    "runbook_id": "RB-109",
+    "title": "RB-109: OSPF Neighbor Adjacency Failure",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch (Layer 3)"
+    ],
+    "fault_category": "Routing Protocol",
+    "source_file": "RB-109-ospf-adjacency.md"
+  },
+  {
+    "chunk_id": "RB-109_chunk_5",
+    "text": "### Diagnosis Steps\n1. **Check OSPF neighbor table**: `show ip ospf neighbor` to see current state of all adjacencies.\n2. **Verify OSPF configuration**: Confirm area ID, hello/dead timers, network type, and authentication match on both sides.\n3. **Check MTU**: OSPF will not form adjacency if MTU mismatches exist on the link. Verify with `show interface` and compare both ends.\n4. **Review access lists**: Ensure OSPF multicast (224.0.0.5, 224.0.0.6) is not being blocked by interface ACLs or firewall rules.\n5. **Check interface state**: The underlying interface must be UP/UP for OSPF to work. Check for physical layer issues (see RB-102).",
+    "section": "Diagnosis Steps",
+    "token_estimate": 160,
+    "runbook_id": "RB-109",
+    "title": "RB-109: OSPF Neighbor Adjacency Failure",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch (Layer 3)"
+    ],
+    "fault_category": "Routing Protocol",
+    "source_file": "RB-109-ospf-adjacency.md"
+  },
+  {
+    "chunk_id": "RB-109_chunk_6",
+    "text": "### Remediation\n1. **Timer mismatch**: Ensure hello and dead timers match: `ip ospf hello-interval 10` and `ip ospf dead-interval 40` (default).\n2. **MTU fix**: Set matching MTU on both ends or use `ip ospf mtu-ignore` as a temporary workaround.\n3. **Area mismatch**: Correct the area assignment on the misconfigured side.\n4. **Authentication**: If authentication is enabled, verify the key and key-id match. Re-key if necessary.\n5. **Restart OSPF process**: As a last resort, `clear ip ospf process` (causes momentary traffic disruption).",
+    "section": "Remediation",
+    "token_estimate": 134,
+    "runbook_id": "RB-109",
+    "title": "RB-109: OSPF Neighbor Adjacency Failure",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch (Layer 3)"
+    ],
+    "fault_category": "Routing Protocol",
+    "source_file": "RB-109-ospf-adjacency.md"
+  },
+  {
+    "chunk_id": "RB-109_chunk_7",
+    "text": "### Escalation\nIf adjacency cannot be established after configuration verification, collect OSPF debug output (`debug ip ospf adj`) and escalate to Routing Engineering team.\n\n---",
+    "section": "Escalation",
+    "token_estimate": 44,
+    "runbook_id": "RB-109",
+    "title": "RB-109: OSPF Neighbor Adjacency Failure",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch (Layer 3)"
+    ],
+    "fault_category": "Routing Protocol",
+    "source_file": "RB-109-ospf-adjacency.md"
+  },
+  {
+    "chunk_id": "RB-110_chunk_0",
+    "text": "# RB-110: Hardware Degradation and Predictive Failure",
+    "section": "RB-110: Hardware Degradation and Predictive Failure",
+    "token_estimate": 13,
+    "runbook_id": "RB-110",
+    "title": "RB-110: Hardware Degradation and Predictive Failure",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server",
+      "Firewall"
+    ],
+    "fault_category": "Hardware Failure (Predictive)",
+    "source_file": "RB-110-hardware-degradation.md"
+  },
+  {
+    "chunk_id": "RB-110_chunk_1",
+    "text": "## Classification: RESTRICTED",
+    "section": "Classification: RESTRICTED",
+    "token_estimate": 7,
+    "runbook_id": "RB-110",
+    "title": "RB-110: Hardware Degradation and Predictive Failure",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server",
+      "Firewall"
+    ],
+    "fault_category": "Hardware Failure (Predictive)",
+    "source_file": "RB-110-hardware-degradation.md"
+  },
+  {
+    "chunk_id": "RB-110_chunk_2",
+    "text": "## Applicable Devices: Router, Switch, Server, Firewall",
+    "section": "Applicable Devices: Router, Switch, Server, Firewall",
+    "token_estimate": 13,
+    "runbook_id": "RB-110",
+    "title": "RB-110: Hardware Degradation and Predictive Failure",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server",
+      "Firewall"
+    ],
+    "fault_category": "Hardware Failure (Predictive)",
+    "source_file": "RB-110-hardware-degradation.md"
+  },
+  {
+    "chunk_id": "RB-110_chunk_3",
+    "text": "## Fault Category: Hardware Failure (Predictive)",
+    "section": "Fault Category: Hardware Failure (Predictive)",
+    "token_estimate": 12,
+    "runbook_id": "RB-110",
+    "title": "RB-110: Hardware Degradation and Predictive Failure",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server",
+      "Firewall"
+    ],
+    "fault_category": "Hardware Failure (Predictive)",
+    "source_file": "RB-110-hardware-degradation.md"
+  },
+  {
+    "chunk_id": "RB-110_chunk_4",
+    "text": "### Symptoms\n- Correctable ECC memory errors increasing over time\n- SMART disk warnings (for server devices)\n- Intermittent module resets or line card reloads\n- Syslog: `HARDWARE: DIMM slot X correctable ECC error count: N`\n- Environmental sensors showing gradual drift from baseline",
+    "section": "Symptoms",
+    "token_estimate": 70,
+    "runbook_id": "RB-110",
+    "title": "RB-110: Hardware Degradation and Predictive Failure",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server",
+      "Firewall"
+    ],
+    "fault_category": "Hardware Failure (Predictive)",
+    "source_file": "RB-110-hardware-degradation.md"
+  },
+  {
+    "chunk_id": "RB-110_chunk_5",
+    "text": "### Diagnosis Steps\n1. **Check hardware diagnostics**: Run `show diagnostic result module all` (Cisco) or `ipmitool sel list` (server) for hardware event log entries.\n2. **Review ECC error trend**: A slowly rising correctable ECC error count indicates DIMM degradation. Track the rate \u2014 more than 100 errors/day warrants preemptive replacement.\n3. **Check disk health**: For servers, run `smartctl -a /dev/sdX` and review Reallocated Sector Count, Current Pending Sector, and Offline Uncorrectable counters.\n4. **Module stability**: Review `show module` uptime for unexpected reloads or resets.\n5. **Cross-reference with environmental data**: Hardware degradation can be accelerated by thermal stress (see RB-104).",
+    "section": "Diagnosis Steps",
+    "token_estimate": 178,
+    "runbook_id": "RB-110",
+    "title": "RB-110: Hardware Degradation and Predictive Failure",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server",
+      "Firewall"
+    ],
+    "fault_category": "Hardware Failure (Predictive)",
+    "source_file": "RB-110-hardware-degradation.md"
+  },
+  {
+    "chunk_id": "RB-110_chunk_6",
+    "text": "### Remediation\n1. **DIMM replacement**: If ECC error rate exceeds threshold, schedule DIMM replacement during the next maintenance window. Identify the exact DIMM slot from diagnostics.\n2. **Disk replacement**: If SMART attributes indicate pending failure, initiate RAID rebuild with replacement disk before the drive fails completely.\n3. **Module replacement**: If a line card is experiencing repeated resets, RMA (Return Merchandise Authorization) the module with the vendor.\n4. **Proactive migration**: Before hardware replacement, migrate workloads/traffic to redundant paths to minimize service impact.\n5. **Preventive**: Implement predictive failure monitoring that tracks degradation trends and alerts before critical threshold is reached (this co-pilot system).",
+    "section": "Remediation",
+    "token_estimate": 192,
+    "runbook_id": "RB-110",
+    "title": "RB-110: Hardware Degradation and Predictive Failure",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server",
+      "Firewall"
+    ],
+    "fault_category": "Hardware Failure (Predictive)",
+    "source_file": "RB-110-hardware-degradation.md"
+  },
+  {
+    "chunk_id": "RB-110_chunk_7",
+    "text": "### Escalation\nFor confirmed hardware degradation, open an RMA case with the hardware vendor. Include serial number, diagnostic output, and error rate timeline.\n\n---",
+    "section": "Escalation",
+    "token_estimate": 41,
+    "runbook_id": "RB-110",
+    "title": "RB-110: Hardware Degradation and Predictive Failure",
+    "classification": "RESTRICTED",
+    "applicable_devices": [
+      "Router",
+      "Switch",
+      "Server",
+      "Firewall"
+    ],
+    "fault_category": "Hardware Failure (Predictive)",
+    "source_file": "RB-110-hardware-degradation.md"
+  }
+]
