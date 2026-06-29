@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ISRO NetOps Co-Pilot — Secure Access</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
+  <title>ISRO NetOps Co-Pilot â€” Secure Access</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>ðŸ”</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -100,21 +100,21 @@
 <div class="auth-wrapper">
   <div class="auth-card">
     <div class="auth-header">
-      <div class="auth-logo">🛰️</div>
+      <div class="auth-logo">ðŸ›°ï¸</div>
       <div class="auth-title">Secure Access Portal</div>
       <div class="auth-subtitle">ISRO NetOps Predictive Co-Pilot</div>
       <div class="auth-badge"><span class="badge-dot"></span>MLS-AUTHENTICATED ZONE</div>
     </div>
     <div class="method-tabs" role="tablist">
       <div class="method-tab active" data-tab="password" onclick="switchTab('password')" role="tab">
-        <span class="tab-icon">🔑</span><span>Credentials</span>
+        <span class="tab-icon">ðŸ”‘</span><span>Credentials</span>
       </div>
       <div class="method-tab" data-tab="fingerprint" onclick="switchTab('fingerprint')" role="tab">
         <span class="soon-badge">SOON</span>
-        <span class="tab-icon">👆</span><span>Fingerprint</span>
+        <span class="tab-icon">ðŸ‘†</span><span>Fingerprint</span>
       </div>
       <div class="method-tab" data-tab="camera" onclick="switchTab('camera')" role="tab">
-        <span class="tab-icon">📷</span><span>Face Scan</span>
+        <span class="tab-icon">ðŸ“·</span><span>Face Scan</span>
       </div>
     </div>
 
@@ -124,45 +124,45 @@
         <div class="input-label">Clearance Level</div>
         <div class="clearance-row">
           <div class="clearance-opt selected" onclick="selectClearance(this,'UNCLASSIFIED')">
-            <div class="clearance-level">🟢</div>UNCLASSIFIED
+            <div class="clearance-level">ðŸŸ¢</div>UNCLASSIFIED
           </div>
           <div class="clearance-opt" onclick="selectClearance(this,'RESTRICTED')">
-            <div class="clearance-level">🟡</div>RESTRICTED
+            <div class="clearance-level">ðŸŸ¡</div>RESTRICTED
           </div>
           <div class="clearance-opt" onclick="selectClearance(this,'CONFIDENTIAL')">
-            <div class="clearance-level">🔴</div>CONFIDENTIAL
+            <div class="clearance-level">ðŸ”´</div>CONFIDENTIAL
           </div>
         </div>
       </div>
       <div class="input-group">
         <label class="input-label">Operator ID</label>
         <div class="input-wrap">
-          <span class="input-icon">👤</span>
+          <span class="input-icon">ðŸ‘¤</span>
           <input id="username" class="input-field" type="text" placeholder="Enter your operator ID" autocomplete="username">
         </div>
       </div>
       <div class="input-group">
         <label class="input-label">Access Code</label>
         <div class="input-wrap">
-          <span class="input-icon">🔒</span>
+          <span class="input-icon">ðŸ”’</span>
           <input id="password" class="input-field" type="password" placeholder="Enter your access code" autocomplete="current-password">
         </div>
       </div>
       <button class="btn-auth" id="loginBtn" onclick="doLogin()">
-        <span id="loginBtnContent">Authenticate &amp; Enter →</span>
+        <span id="loginBtnContent">Authenticate &amp; Enter â†’</span>
       </button>
-      <div class="auth-msg error" id="errorMsg"><span>⚠️</span><span id="errorText">Invalid credentials.</span></div>
-      <div class="auth-msg success" id="successMsg"><span>✅</span><span>Authentication successful. Launching Co-Pilot…</span></div>
+      <div class="auth-msg error" id="errorMsg"><span>âš ï¸</span><span id="errorText">Invalid credentials.</span></div>
+      <div class="auth-msg success" id="successMsg"><span>âœ…</span><span>Authentication successful. Launching Co-Pilotâ€¦</span></div>
       <div class="demo-hint">Demo: <code>isro_admin / ISRO@2026</code> &nbsp;|&nbsp; <code>JESH2789 / 12345678</code></div>
     </div>
 
     <!-- FINGERPRINT PANEL -->
     <div id="panel-fingerprint" class="auth-panel">
       <div class="fp-container">
-        <div class="fp-ring"><span class="fp-icon">☝️</span></div>
+        <div class="fp-ring"><span class="fp-icon">â˜ï¸</span></div>
         <div class="fp-title">Biometric Authentication</div>
         <div class="fp-desc">Place your registered finger on the connected biometric scanner to authenticate without credentials.</div>
-        <div class="coming-soon-badge">🔜 &nbsp; COMING SOON</div>
+        <div class="coming-soon-badge">ðŸ”œ &nbsp; COMING SOON</div>
         <p style="margin-top:14px;font-size:12px;color:var(--text2);">Hardware fingerprint scanner integration is under development.</p>
       </div>
     </div>
@@ -180,19 +180,19 @@
               <svg viewBox="0 0 120 140"><ellipse cx="60" cy="68" rx="42" ry="54"/><line x1="30" y1="52" x2="48" y2="52"/><line x1="72" y1="52" x2="90" y2="52"/><path d="M42 90 Q60 105 78 90"/></svg>
             </div>
           </div>
-          <div class="cam-no-video" id="camNoVideo"><span class="cam-icon">📷</span><span>Camera not active</span></div>
+          <div class="cam-no-video" id="camNoVideo"><span class="cam-icon">ðŸ“·</span><span>Camera not active</span></div>
         </div>
         <div class="cam-status" id="camStatus"><span class="status-dot"></span>CAMERA OFFLINE</div>
         <button class="btn-auth" id="camBtn" onclick="startCamera()" style="background:rgba(0,229,255,0.1);color:var(--cyan);border:1px solid rgba(0,229,255,0.3);box-shadow:none;">Activate Camera</button>
-        <button class="btn-auth" id="scanBtn" onclick="doFaceScan()" style="display:none;margin-top:10px;">🔍 &nbsp;Scan &amp; Authenticate</button>
-        <div class="auth-msg error" id="camErrorMsg"><span>⚠️</span><span id="camErrorText">Camera access denied.</span></div>
-        <div class="auth-msg success" id="camSuccessMsg"><span>✅</span><span>Face verified. Launching Co-Pilot…</span></div>
+        <button class="btn-auth" id="scanBtn" onclick="doFaceScan()" style="display:none;margin-top:10px;">ðŸ” &nbsp;Scan &amp; Authenticate</button>
+        <div class="auth-msg error" id="camErrorMsg"><span>âš ï¸</span><span id="camErrorText">Camera access denied.</span></div>
+        <div class="auth-msg success" id="camSuccessMsg"><span>âœ…</span><span>Face verified. Launching Co-Pilotâ€¦</span></div>
       </div>
     </div>
 
     <div class="auth-footer">
-      <a href="http://localhost:8502/_index_patched.html">← Back to landing page</a>
-      &nbsp;·&nbsp; Air-Gapped · Zero Egress · MLS-Compliant
+      <a href="http://localhost:8502/_index_patched.html">â† Back to landing page</a>
+      &nbsp;Â·&nbsp; Air-Gapped Â· Zero Egress Â· MLS-Compliant
     </div>
   </div>
 </div>
@@ -223,14 +223,14 @@
     err.classList.remove('show'); ok.classList.remove('show');
     if(!user||!pass){document.getElementById('errorText').textContent='Please enter Operator ID and Access Code.';err.classList.add('show');return;}
     btn.classList.add('loading');
-    document.getElementById('loginBtnContent').innerHTML='<div class="spinner"></div>&nbsp;Authenticating…';
+    document.getElementById('loginBtnContent').innerHTML='<div class="spinner"></div>&nbsp;Authenticatingâ€¦';
     setTimeout(()=>{
       if(VALID_USERS[user]&&VALID_USERS[user]===pass){
         ok.classList.add('show');
-        setTimeout(()=>{window.parent.location.href='http://localhost:8501/?view=dashboard';},1200);
+        setTimeout(()=>{window.location.href='http://localhost:8501/?view=dashboard';},1200);
       } else {
         btn.classList.remove('loading');
-        document.getElementById('loginBtnContent').textContent='Authenticate & Enter →';
+        document.getElementById('loginBtnContent').textContent='Authenticate & Enter â†’';
         document.getElementById('errorText').textContent='Invalid Operator ID or Access Code. Access denied.';
         err.classList.add('show');
         const card=document.querySelector('.auth-card');
@@ -259,7 +259,7 @@
       document.getElementById('scanLine').style.display='block';
       const status=document.getElementById('camStatus');
       status.classList.add('active');
-      status.innerHTML='<span class="status-dot"></span>CAMERA ACTIVE — Position your face in the frame';
+      status.innerHTML='<span class="status-dot"></span>CAMERA ACTIVE â€” Position your face in the frame';
       document.getElementById('camBtn').style.display='none';
       document.getElementById('scanBtn').style.display='flex';
     }catch(e){
@@ -285,11 +285,12 @@
     const scanBtn=document.getElementById('scanBtn');
     const ok=document.getElementById('camSuccessMsg');
     document.getElementById('camErrorMsg').classList.remove('show');
-    scanBtn.innerHTML='<div class="spinner" style="border-color:rgba(7,11,20,0.3);border-top-color:#070B14;"></div>&nbsp;Scanning…';
+    scanBtn.innerHTML='<div class="spinner" style="border-color:rgba(7,11,20,0.3);border-top-color:#070B14;"></div>&nbsp;Scanningâ€¦';
     scanBtn.classList.add('loading');
-    setTimeout(()=>{ok.classList.add('show');stopCamera();setTimeout(()=>{window.parent.location.href='http://localhost:8501/?view=dashboard';},1500);},2800);
+    setTimeout(()=>{ok.classList.add('show');stopCamera();setTimeout(()=>{window.location.href='http://localhost:8501/?view=dashboard';},1500);},2800);
   }
 </script>
 </body>
 </html>
+
 

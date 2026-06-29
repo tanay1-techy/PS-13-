@@ -87,10 +87,21 @@ except OSError:
 _html_path = _landing_dir / "index.html"
 if _html_path.exists():
     _raw = _html_path.read_text(encoding="utf-8")
-    _raw = _raw.replace('href="http://localhost:8501"', 'href="http://localhost:8501/?view=auth"')
+    _raw = _raw.replace('href="http://localhost:8501"', 'href="http://localhost:8502/auth.html"')
     (_landing_dir / "_index_patched.html").write_text(_raw, encoding="utf-8")
 
 if _view == "":
+    # Pre-warm the orchestrator (load ML models, build RAG) in the background so dashboard is instant
+    if "prewarming" not in st.session_state:
+        st.session_state.prewarming = True
+        def _prewarm_orch():
+            try:
+                from src.agent.orchestrator import get_orchestrator
+                get_orchestrator().initialize()
+            except Exception:
+                pass
+        _threading.Thread(target=_prewarm_orch, daemon=True).start()
+
     # Initial visit to localhost:8501 -> Redirect to landing page on port 8502
     st.markdown("""
     <meta http-equiv="refresh" content="0; url=http://localhost:8502/_index_patched.html">
@@ -101,44 +112,6 @@ if _view == "":
     </style>
     """, unsafe_allow_html=True)
     st.stop()
-
-elif _view == "auth":
-    # Read auth.html from landing directory and show it full-screen
-    _auth_path = _landing_dir / "auth.html"
-    if _auth_path.exists():
-        _auth_html = _auth_path.read_text(encoding="utf-8")
-        # Hide all Streamlit chrome
-        st.markdown("""
-        <style>
-            header[data-testid="stHeader"] { display: none !important; }
-            section[data-testid="stSidebar"] { display: none !important; }
-            .stMainBlockContainer { padding: 0 !important; max-width: 100% !important; }
-            .block-container { padding: 0 !important; max-width: 100% !important; }
-            footer { display: none !important; }
-            #MainMenu { display: none !important; }
-            iframe {
-                position: fixed !important;
-                top: 0 !important; left: 0 !important;
-                width: 100vw !important;
-                height: 100vh !important;
-                border: none !important;
-                z-index: 9999 !important;
-            }
-        </style>
-        """, unsafe_allow_html=True)
-
-        # Pre-warm the orchestrator (load ML models, build RAG) in the background so dashboard is instant
-        def _prewarm_orch():
-            try:
-                from src.agent.orchestrator import get_orchestrator
-                get_orchestrator().initialize()
-            except Exception:
-                pass
-        _threading.Thread(target=_prewarm_orch, daemon=True).start()
-
-        import streamlit.components.v1 as _components
-        _components.html(_auth_html, height=800, scrolling=False)
-        st.stop()
 
 # If _view == "dashboard", it falls through and renders the main dashboard
 
