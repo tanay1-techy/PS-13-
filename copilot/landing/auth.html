@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISRO NetOps Co-Pilot — Secure Access</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#070B14;--bg2:#0D1526;--cyan:#00E5FF;--amber:#FF9500;--green:#00FF87;--red:#FF3B5C;--purple:#A855F7;--text:#E8EDF5;--text2:#6B7FA3;--border:rgba(255,255,255,0.08);--font-display:'Space Grotesk',sans-serif;--font-body:'Inter',sans-serif;--font-mono:'JetBrains Mono',monospace;}
+    html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font-body);overflow:hidden;}
+    .bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.03) 1px,transparent 1px);background-size:50px 50px;z-index:0}
+    .bg-glow{position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,0.06) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);z-index:0;animation:pulseGlow 4s ease-in-out infinite}
+    @keyframes pulseGlow{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.5}50%{transform:translate(-50%,-50%) scale(1.15);opacity:1}}
+    .auth-wrapper{position:relative;z-index:10;height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+    .auth-card{width:100%;max-width:480px;background:linear-gradient(145deg,rgba(13,21,38,0.95),rgba(7,11,20,0.98));border:1px solid rgba(0,229,255,0.15);border-radius:24px;padding:40px 40px 36px;box-shadow:0 0 0 1px rgba(0,229,255,0.05),0 30px 80px rgba(0,0,0,0.6),0 0 60px rgba(0,229,255,0.05);backdrop-filter:blur(20px);animation:cardIn 0.6s cubic-bezier(0.2,0.8,0.2,1) both}
+    @keyframes cardIn{from{opacity:0;transform:translateY(30px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+    .auth-header{text-align:center;margin-bottom:32px}
+    .auth-logo{font-size:42px;margin-bottom:12px;filter:drop-shadow(0 0 16px rgba(0,229,255,0.4));display:inline-block;animation:floatLogo 3s ease-in-out infinite}
+    @keyframes floatLogo{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+    .auth-title{font-family:var(--font-display);font-size:21px;font-weight:700;color:var(--text);margin-bottom:5px;letter-spacing:-0.5px}
+    .auth-subtitle{font-size:13px;color:var(--text2)}
+    .auth-badge{display:inline-flex;align-items:center;gap:6px;margin-top:11px;font-family:var(--font-mono);font-size:10px;font-weight:600;color:var(--cyan);letter-spacing:1.5px;padding:5px 14px;background:rgba(0,229,255,0.06);border:1px solid rgba(0,229,255,0.2);border-radius:20px}
+    .badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 1.2s ease-in-out infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+    .method-tabs{display:flex;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:14px;padding:4px;margin-bottom:28px;gap:2px}
+    .method-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;border-radius:10px;cursor:pointer;transition:all 0.25s ease;font-size:11px;font-weight:600;color:var(--text2);letter-spacing:0.3px;border:1px solid transparent;position:relative}
+    .method-tab .tab-icon{font-size:18px}
+    .method-tab.active{background:rgba(0,229,255,0.1);border-color:rgba(0,229,255,0.25);color:var(--cyan)}
+    .method-tab:hover:not(.active){background:rgba(255,255,255,0.04);color:var(--text)}
+    .soon-badge{position:absolute;top:-6px;right:-4px;font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;background:var(--amber);color:#000;letter-spacing:0.5px}
+    .auth-panel{display:none}
+    .auth-panel.active{display:block;animation:panelIn 0.3s ease both}
+    @keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .input-group{margin-bottom:16px;position:relative}
+    .input-label{display:block;font-size:11px;font-weight:600;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px}
+    .input-wrap{position:relative}
+    .input-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;color:var(--text2);pointer-events:none;transition:color 0.2s}
+    .input-field{width:100%;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:12px 14px 12px 42px;font-family:var(--font-body);font-size:14px;color:var(--text);outline:none;transition:all 0.25s ease}
+    .input-field::placeholder{color:rgba(107,127,163,0.6)}
+    .input-field:focus{border-color:rgba(0,229,255,0.4);background:rgba(0,229,255,0.04);box-shadow:0 0 0 3px rgba(0,229,255,0.08)}
+    .input-wrap:focus-within .input-icon{color:var(--cyan)}
+    .clearance-row{display:flex;gap:8px;margin-bottom:16px}
+    .clearance-opt{flex:1;text-align:center;padding:8px 4px;border-radius:10px;border:1px solid var(--border);cursor:pointer;transition:all 0.2s;font-size:10px;font-weight:600;color:var(--text2)}
+    .clearance-opt:hover{border-color:rgba(0,229,255,0.3);color:var(--text)}
+    .clearance-opt.selected{border-color:var(--cyan);background:rgba(0,229,255,0.08);color:var(--cyan)}
+    .clearance-level{font-size:14px;margin-bottom:2px}
+    .btn-auth{width:100%;padding:14px;border:none;border-radius:12px;background:var(--cyan);color:#070B14;font-family:var(--font-display);font-size:15px;font-weight:700;cursor:pointer;transition:all 0.3s cubic-bezier(0.175,0.885,0.32,1.275);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:10px;letter-spacing:0.3px;margin-top:8px;box-shadow:0 8px 25px rgba(0,229,255,0.25)}
+    .btn-auth::before{content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);transform:skewX(-20deg);animation:btnShine 3s infinite}
+    @keyframes btnShine{0%{left:-100%}20%{left:200%}100%{left:200%}}
+    .btn-auth:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(0,229,255,0.4)}
+    .btn-auth.loading{pointer-events:none;opacity:0.8}
+    .auth-msg{margin-top:12px;padding:10px 14px;border-radius:10px;font-size:13px;font-weight:600;display:none;align-items:center;gap:10px;animation:msgIn 0.3s ease}
+    @keyframes msgIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+    .auth-msg.show{display:flex}
+    .auth-msg.error{background:rgba(255,59,92,0.12);border:1px solid rgba(255,59,92,0.3);color:var(--red)}
+    .auth-msg.success{background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.3);color:var(--green)}
+    .fp-container{text-align:center;padding:8px 0 16px}
+    .fp-ring{width:140px;height:140px;border-radius:50%;background:rgba(0,0,0,0.3);border:2px solid rgba(255,149,0,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;position:relative}
+    .fp-ring::before,.fp-ring::after{content:'';position:absolute;border-radius:50%;border:1px solid rgba(255,149,0,0.15)}
+    .fp-ring::before{inset:-14px}
+    .fp-ring::after{inset:-26px}
+    .fp-icon{font-size:56px;filter:grayscale(0.5)}
+    .fp-title{font-family:var(--font-display);font-size:19px;font-weight:700;margin-bottom:8px}
+    .fp-desc{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:22px}
+    .coming-soon-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:rgba(255,149,0,0.1);border:1px solid rgba(255,149,0,0.3);border-radius:12px;font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--amber);letter-spacing:2px}
+    .cam-container{text-align:center}
+    .cam-frame{width:100%;max-width:320px;aspect-ratio:4/3;margin:0 auto 16px;border-radius:16px;overflow:hidden;position:relative;border:2px solid rgba(0,229,255,0.2);background:#000}
+    #cameraFeed{width:100%;height:100%;object-fit:cover;display:block}
+    .cam-overlay{position:absolute;inset:0;pointer-events:none}
+    .cam-corner{position:absolute;width:22px;height:22px;border-color:var(--cyan);border-style:solid}
+    .cam-corner.tl{top:10px;left:10px;border-width:2px 0 0 2px;border-radius:4px 0 0 0}
+    .cam-corner.tr{top:10px;right:10px;border-width:2px 2px 0 0;border-radius:0 4px 0 0}
+    .cam-corner.bl{bottom:10px;left:10px;border-width:0 0 2px 2px;border-radius:0 0 0 4px}
+    .cam-corner.br{bottom:10px;right:10px;border-width:0 2px 2px 0;border-radius:0 0 4px 0}
+    .scan-line{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);box-shadow:0 0 10px var(--cyan);top:0;animation:scanAnim 2.5s ease-in-out infinite;display:none}
+    @keyframes scanAnim{0%{top:10%;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:90%;opacity:0}}
+    .cam-face-guide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+    .cam-face-guide svg{width:100px;height:120px;stroke:rgba(0,229,255,0.35);fill:none;stroke-width:1.5;stroke-dasharray:6 4}
+    .cam-no-video{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-size:13px;color:var(--text2)}
+    .cam-no-video .cam-icon{font-size:32px}
+    .cam-status{font-family:var(--font-mono);font-size:11px;color:var(--text2);margin-bottom:16px;letter-spacing:0.5px}
+    .cam-status .status-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--text2);margin-right:6px;vertical-align:middle}
+    .cam-status.active .status-dot{background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 1.2s infinite}
+    .auth-footer{text-align:center;margin-top:20px;font-size:12px;color:rgba(107,127,163,0.6)}
+    .auth-footer a{color:var(--text2);text-decoration:none;transition:color 0.2s}
+    .auth-footer a:hover{color:var(--cyan)}
+    .spinner{width:16px;height:16px;border:2px solid rgba(7,11,20,0.3);border-top-color:#070B14;border-radius:50%;animation:spin 0.7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .demo-hint{margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--text2);text-align:center}
+    .demo-hint code{color:var(--cyan);background:rgba(0,229,255,0.08);padding:2px 8px;border-radius:4px;font-family:var(--font-mono)}
+  </style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="auth-logo">🛰️</div>
+      <div class="auth-title">Secure Access Portal</div>
+      <div class="auth-subtitle">ISRO NetOps Predictive Co-Pilot</div>
+      <div class="auth-badge"><span class="badge-dot"></span>MLS-AUTHENTICATED ZONE</div>
+    </div>
+    <div class="method-tabs" role="tablist">
+      <div class="method-tab active" data-tab="password" onclick="switchTab('password')" role="tab">
+        <span class="tab-icon">🔑</span><span>Credentials</span>
+      </div>
+      <div class="method-tab" data-tab="fingerprint" onclick="switchTab('fingerprint')" role="tab">
+        <span class="soon-badge">SOON</span>
+        <span class="tab-icon">👆</span><span>Fingerprint</span>
+      </div>
+      <div class="method-tab" data-tab="camera" onclick="switchTab('camera')" role="tab">
+        <span class="tab-icon">📷</span><span>Face Scan</span>
+      </div>
+    </div>
+
+    <!-- PASSWORD PANEL -->
+    <div id="panel-password" class="auth-panel active">
+      <div style="margin-bottom:14px;">
+        <div class="input-label">Clearance Level</div>
+        <div class="clearance-row">
+          <div class="clearance-opt selected" onclick="selectClearance(this,'UNCLASSIFIED')">
+            <div class="clearance-level">🟢</div>UNCLASSIFIED
+          </div>
+          <div class="clearance-opt" onclick="selectClearance(this,'RESTRICTED')">
+            <div class="clearance-level">🟡</div>RESTRICTED
+          </div>
+          <div class="clearance-opt" onclick="selectClearance(this,'CONFIDENTIAL')">
+            <div class="clearance-level">🔴</div>CONFIDENTIAL
+          </div>
+        </div>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Operator ID</label>
+        <div class="input-wrap">
+          <span class="input-icon">👤</span>
+          <input id="username" class="input-field" type="text" placeholder="Enter your operator ID" autocomplete="username">
+        </div>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Access Code</label>
+        <div class="input-wrap">
+          <span class="input-icon">🔒</span>
+          <input id="password" class="input-field" type="password" placeholder="Enter your access code" autocomplete="current-password">
+        </div>
+      </div>
+      <button class="btn-auth" id="loginBtn" onclick="doLogin()">
+        <span id="loginBtnContent">Authenticate &amp; Enter →</span>
+      </button>
+      <div class="auth-msg error" id="errorMsg"><span>⚠️</span><span id="errorText">Invalid credentials.</span></div>
+      <div class="auth-msg success" id="successMsg"><span>✅</span><span>Authentication successful. Launching Co-Pilot…</span></div>
+      <div class="demo-hint">Demo: <code>isro_admin / ISRO@2026</code> &nbsp;|&nbsp; <code>JESH2789 / 12345678</code></div>
+    </div>
+
+    <!-- FINGERPRINT PANEL -->
+    <div id="panel-fingerprint" class="auth-panel">
+      <div class="fp-container">
+        <div class="fp-ring"><span class="fp-icon">☝️</span></div>
+        <div class="fp-title">Biometric Authentication</div>
+        <div class="fp-desc">Place your registered finger on the connected biometric scanner to authenticate without credentials.</div>
+        <div class="coming-soon-badge">🔜 &nbsp; COMING SOON</div>
+        <p style="margin-top:14px;font-size:12px;color:var(--text2);">Hardware fingerprint scanner integration is under development.</p>
+      </div>
+    </div>
+
+    <!-- CAMERA PANEL -->
+    <div id="panel-camera" class="auth-panel">
+      <div class="cam-container">
+        <div class="cam-frame" id="camFrame">
+          <video id="cameraFeed" autoplay playsinline muted></video>
+          <div class="cam-overlay">
+            <div class="cam-corner tl"></div><div class="cam-corner tr"></div>
+            <div class="cam-corner bl"></div><div class="cam-corner br"></div>
+            <div class="scan-line" id="scanLine"></div>
+            <div class="cam-face-guide">
+              <svg viewBox="0 0 120 140"><ellipse cx="60" cy="68" rx="42" ry="54"/><line x1="30" y1="52" x2="48" y2="52"/><line x1="72" y1="52" x2="90" y2="52"/><path d="M42 90 Q60 105 78 90"/></svg>
+            </div>
+          </div>
+          <div class="cam-no-video" id="camNoVideo"><span class="cam-icon">📷</span><span>Camera not active</span></div>
+        </div>
+        <div class="cam-status" id="camStatus"><span class="status-dot"></span>CAMERA OFFLINE</div>
+        <button class="btn-auth" id="camBtn" onclick="startCamera()" style="background:rgba(0,229,255,0.1);color:var(--cyan);border:1px solid rgba(0,229,255,0.3);box-shadow:none;">Activate Camera</button>
+        <button class="btn-auth" id="scanBtn" onclick="doFaceScan()" style="display:none;margin-top:10px;">🔍 &nbsp;Scan &amp; Authenticate</button>
+        <div class="auth-msg error" id="camErrorMsg"><span>⚠️</span><span id="camErrorText">Camera access denied.</span></div>
+        <div class="auth-msg success" id="camSuccessMsg"><span>✅</span><span>Face verified. Launching Co-Pilot…</span></div>
+      </div>
+    </div>
+
+    <div class="auth-footer">
+      <a href="http://localhost:8502/_index_patched.html">← Back to landing page</a>
+      &nbsp;·&nbsp; Air-Gapped · Zero Egress · MLS-Compliant
+    </div>
+  </div>
+</div>
+
+<script>
+  const VALID_USERS = {"isro_admin":"ISRO@2026","operator":"NetOps#1","admin":"admin123","JESH2789":"12345678"};
+  let selectedClearance = "UNCLASSIFIED";
+
+  function switchTab(tab) {
+    document.querySelectorAll('.method-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.auth-panel').forEach(p=>p.classList.remove('active'));
+    document.querySelector('[data-tab="'+tab+'"]').classList.add('active');
+    document.getElementById('panel-'+tab).classList.add('active');
+    if(tab!=='camera') stopCamera();
+  }
+
+  function selectClearance(el,level){
+    document.querySelectorAll('.clearance-opt').forEach(o=>o.classList.remove('selected'));
+    el.classList.add('selected'); selectedClearance=level;
+  }
+
+  function doLogin(){
+    const user=document.getElementById('username').value.trim();
+    const pass=document.getElementById('password').value;
+    const btn=document.getElementById('loginBtn');
+    const err=document.getElementById('errorMsg');
+    const ok=document.getElementById('successMsg');
+    err.classList.remove('show'); ok.classList.remove('show');
+    if(!user||!pass){document.getElementById('errorText').textContent='Please enter Operator ID and Access Code.';err.classList.add('show');return;}
+    btn.classList.add('loading');
+    document.getElementById('loginBtnContent').innerHTML='<div class="spinner"></div>&nbsp;Authenticating…';
+    setTimeout(()=>{
+      if(VALID_USERS[user]&&VALID_USERS[user]===pass){
+        ok.classList.add('show');
+        setTimeout(()=>{window.parent.location.href='http://localhost:8501/?view=dashboard';},1200);
+      } else {
+        btn.classList.remove('loading');
+        document.getElementById('loginBtnContent').textContent='Authenticate & Enter →';
+        document.getElementById('errorText').textContent='Invalid Operator ID or Access Code. Access denied.';
+        err.classList.add('show');
+        const card=document.querySelector('.auth-card');
+        ['-8px','8px','-5px','5px','0'].forEach((v,i)=>setTimeout(()=>{card.style.transform=v==='0'?'':'translateX('+v+')';},i*80));
+      }
+    },1400);
+  }
+
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){
+      const active=document.querySelector('.auth-panel.active');
+      if(active&&active.id==='panel-password') doLogin();
+      if(active&&active.id==='panel-camera'&&document.getElementById('scanBtn').style.display!=='none') doFaceScan();
+    }
+  });
+
+  let cameraStream=null;
+
+  async function startCamera(){
+    const err=document.getElementById('camErrorMsg'); err.classList.remove('show');
+    try{
+      cameraStream=await navigator.mediaDevices.getUserMedia({video:true,audio:false});
+      const video=document.getElementById('cameraFeed');
+      video.srcObject=cameraStream; video.style.display='block';
+      document.getElementById('camNoVideo').style.display='none';
+      document.getElementById('scanLine').style.display='block';
+      const status=document.getElementById('camStatus');
+      status.classList.add('active');
+      status.innerHTML='<span class="status-dot"></span>CAMERA ACTIVE — Position your face in the frame';
+      document.getElementById('camBtn').style.display='none';
+      document.getElementById('scanBtn').style.display='flex';
+    }catch(e){
+      document.getElementById('camErrorText').textContent='Camera access denied. Please allow camera permission in your browser.';
+      err.classList.add('show');
+    }
+  }
+
+  function stopCamera(){
+    if(cameraStream){
+      cameraStream.getTracks().forEach(t=>t.stop()); cameraStream=null;
+      document.getElementById('cameraFeed').srcObject=null;
+      document.getElementById('camNoVideo').style.display='flex';
+      document.getElementById('scanLine').style.display='none';
+      document.getElementById('camStatus').classList.remove('active');
+      document.getElementById('camStatus').innerHTML='<span class="status-dot"></span>CAMERA OFFLINE';
+      document.getElementById('camBtn').style.display='flex';
+      document.getElementById('scanBtn').style.display='none';
+    }
+  }
+
+  function doFaceScan(){
+    const scanBtn=document.getElementById('scanBtn');
+    const ok=document.getElementById('camSuccessMsg');
+    document.getElementById('camErrorMsg').classList.remove('show');
+    scanBtn.innerHTML='<div class="spinner" style="border-color:rgba(7,11,20,0.3);border-top-color:#070B14;"></div>&nbsp;Scanning…';
+    scanBtn.classList.add('loading');
+    setTimeout(()=>{ok.classList.add('show');stopCamera();setTimeout(()=>{window.parent.location.href='http://localhost:8501/?view=dashboard';},1500);},2800);
+  }
+</script>
+</body>
+</html>
+

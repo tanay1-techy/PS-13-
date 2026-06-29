@@ -11,6 +11,17 @@ Stitch-inspired premium dark theme with five tabs:
 
 import sys
 import os
+import io
+
+# Fix Windows cp1252 encoding — must run before ANY emoji print() call
+for _stream_name in ('stdout', 'stderr'):
+    _stream = getattr(sys, _stream_name, None)
+    if _stream is not None and hasattr(_stream, 'reconfigure'):
+        try:
+            _stream.reconfigure(encoding='utf-8', errors='replace')
+        except Exception:
+            pass
+
 import re
 import time
 import json
@@ -43,6 +54,99 @@ st.set_page_config(
 )
 
 # ══════════════════════════════════════════════════════════════════════════════
+# Auth Gate — Show auth page between landing and dashboard
+# ══════════════════════════════════════════════════════════════════════════════
+
+_qp = st.query_params
+_view = _qp.get("view", "")
+
+# Start HTTP server on port 8502 for landing page (background, once)
+import threading as _threading
+import http.server as _http_server
+import functools as _functools
+
+_landing_dir = PROJECT_ROOT / "landing"
+try:
+    import socket as _sock
+    _s = _sock.socket()
+    _s.bind(("", 8502))
+    _s.close()
+    # Port free → start server
+    def _run_landing_server():
+        handler = _functools.partial(
+            _http_server.SimpleHTTPRequestHandler,
+            directory=str(_landing_dir),
+        )
+        srv = _http_server.HTTPServer(("", 8502), handler)
+        srv.serve_forever()
+    _threading.Thread(target=_run_landing_server, daemon=True).start()
+except OSError:
+    pass  # already running
+
+# Patch landing page link → auth page
+_html_path = _landing_dir / "index.html"
+if _html_path.exists():
+    _raw = _html_path.read_text(encoding="utf-8")
+    _raw = _raw.replace('href="http://localhost:8501"', 'href="http://localhost:8501/?view=auth"')
+    (_landing_dir / "_index_patched.html").write_text(_raw, encoding="utf-8")
+
+if _view == "":
+    # Initial visit to localhost:8501 -> Redirect to landing page on port 8502
+    st.markdown("""
+    <meta http-equiv="refresh" content="0; url=http://localhost:8502/_index_patched.html">
+    <style>
+        header, footer, #MainMenu { display: none !important; }
+        section[data-testid="stSidebar"] { display: none !important; }
+        body { background: #070B14 !important; margin: 0; }
+    </style>
+    """, unsafe_allow_html=True)
+    st.stop()
+
+elif _view == "auth":
+    # Read auth.html from landing directory and show it full-screen
+    _auth_path = _landing_dir / "auth.html"
+    if _auth_path.exists():
+        _auth_html = _auth_path.read_text(encoding="utf-8")
+        # Hide all Streamlit chrome
+        st.markdown("""
+        <style>
+            header[data-testid="stHeader"] { display: none !important; }
+            section[data-testid="stSidebar"] { display: none !important; }
+            .stMainBlockContainer { padding: 0 !important; max-width: 100% !important; }
+            .block-container { padding: 0 !important; max-width: 100% !important; }
+            footer { display: none !important; }
+            #MainMenu { display: none !important; }
+            iframe {
+                position: fixed !important;
+                top: 0 !important; left: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                border: none !important;
+                z-index: 9999 !important;
+            }
+        </style>
+        """, unsafe_allow_html=True)
+
+        # Pre-warm the orchestrator (load ML models, build RAG) in the background so dashboard is instant
+        def _prewarm_orch():
+            try:
+                from src.agent.orchestrator import get_orchestrator
+                get_orchestrator().initialize()
+            except Exception:
+                pass
+        _threading.Thread(target=_prewarm_orch, daemon=True).start()
+
+        import streamlit.components.v1 as _components
+        _components.html(_auth_html, height=800, scrolling=False)
+        st.stop()
+
+# If _view == "dashboard", it falls through and renders the main dashboard
+
+
+
+
+
+# ══════════════════════════════════════════════════════════════════════════════
 # Premium CSS — Stitch Dark Theme
 # ══════════════════════════════════════════════════════════════════════════════
 
@@ -73,9 +177,12 @@ st.markdown("""
 
   /* ── Base ── */
   html, body, .stApp {
+    background-color: var(--bg-root);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-1);
+  }
+  .stApp {
     background: var(--bg-root) !important;
-    font-family: 'Inter', sans-serif !important;
-    color: var(--text-1) !important;
   }
 
   /* ── Sidebar ── */
@@ -83,7 +190,6 @@ st.markdown("""
     background: linear-gradient(180deg, #0a1020 0%, #10183a 100%) !important;
     border-right: 1px solid var(--border) !important;
   }
-  section[data-testid="stSidebar"] * { font-family: 'Inter', sans-serif !important; }
 
   /* ── Header Banner ── */
   .hdr-banner {
@@ -285,9 +391,59 @@ st.markdown("""
     border-radius: 10px !important;
   }
 
-  #MainMenu { visibility:hidden; }
   footer { visibility:hidden; }
-  header[data-testid="stHeader"] { background:transparent !important; }
+  header[data-testid="stHeader"] { background:transparent !important; z-index: 1000 !important; }
+
+  /* ── Sidebar Toggle Button (Hide/Unhide) ── */
+  [data-testid="collapsedControl"] svg,
+  [data-testid="stSidebarCollapseButton"] svg {
+    display: none !important;
+  }
+  
+  [data-testid="collapsedControl"] button,
+  [data-testid="stSidebarCollapseButton"] {
+    color: transparent !important;
+    position: relative !important;
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    z-index: 99999 !important;
+  }
+  
+  [data-testid="collapsedControl"] button::before,
+  [data-testid="stSidebarCollapseButton"]::before {
+    content: "☰" !important;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--accent-cyan) !important;
+    position: absolute;
+    font-family: sans-serif !important;
+    pointer-events: none !important;
+  }
+
+  [data-testid="collapsedControl"],
+  [data-testid="stSidebarCollapseButton"],
+  [data-testid="stSidebar"] button[kind="header"] {
+    background: rgba(34, 211, 238, 0.15) !important;
+    border: 1px solid var(--accent-cyan) !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease;
+  }
+  [data-testid="collapsedControl"]:hover,
+  [data-testid="stSidebarCollapseButton"]:hover,
+  [data-testid="stSidebar"] button[kind="header"]:hover {
+    background: var(--accent-cyan) !important;
+    box-shadow: 0 0 15px rgba(34, 211, 238, 0.4) !important;
+  }
+  
+  [data-testid="collapsedControl"] button:hover::before,
+  [data-testid="stSidebarCollapseButton"]:hover::before {
+    color: #080d18 !important;
+  }
 
   ::-webkit-scrollbar { width:5px; height:5px; }
   ::-webkit-scrollbar-track { background:var(--bg-root); }
@@ -387,6 +543,38 @@ with st.sidebar:
       </div>
     </div>
     """, unsafe_allow_html=True)
+
+    import streamlit.components.v1 as components
+    components.html("""
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+      a {
+        display: block;
+        text-align: center;
+        padding: 12px;
+        background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(220,38,38,0.05));
+        border: 1px solid rgba(239,68,68,0.3);
+        border-radius: 10px;
+        color: #f87171;
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+      a:hover {
+        background: rgba(239,68,68,0.25);
+        border-color: rgba(239,68,68,0.5);
+        color: #fca5a5;
+      }
+      body { margin: 0; padding: 0; overflow: hidden; }
+    </style>
+    <a onclick="if(document.referrer && !document.referrer.includes('8501')) { window.parent.location.href = document.referrer; } else { window.parent.history.back(); }">
+      🚪 Exit Dashboard
+    </a>
+    """, height=50)
 
     st.markdown(f"""
     <div style="color:#334155;font-size:10px;text-align:center;margin-top:24px;">

@@ -11,6 +11,8 @@ Rule-based orchestration (NOT a heavy agent framework):
 This is deliberately simple and debuggable — a strength, not a weakness.
 """
 
+import sys
+import io
 import json
 import time
 import sqlite3
@@ -49,20 +51,45 @@ class CoPilotOrchestrator:
         2. Train forecasting model
         3. Build RAG index
         """
+        if self._initialized:
+            return
+
+        import time as _time
+        t_start = _time.time()
+
+        # Fix Windows cp1252 encoding — reconfigure AFTER Streamlit redirects stdout
+        for stream_name in ('stdout', 'stderr'):
+            stream = getattr(sys, stream_name, None)
+            if stream is None:
+                continue
+            if hasattr(stream, 'reconfigure'):
+                try:
+                    stream.reconfigure(encoding='utf-8', errors='replace')
+                except Exception:
+                    pass
+            elif hasattr(stream, 'buffer'):
+                try:
+                    setattr(sys, stream_name,
+                            io.TextIOWrapper(stream.buffer, encoding='utf-8', errors='replace'))
+                except Exception:
+                    pass
+
         ensure_dirs()
         print("=" * 60)
-        print("🚀 INITIALIZING CO-PILOT SYSTEM")
+        print("[ROCKET] INITIALIZING CO-PILOT SYSTEM")
         print("=" * 60)
 
         # ── Step 1: Generate Topology ──
-        print("\n📡 Step 1/5: Generating network topology...")
+        t0 = _time.time()
+        print("\n[*] Step 1/5: Generating network topology...")
         from src.ingestion.topology_sim import generate_topology, save_topology
         self.graph, self.devices = generate_topology()
         save_topology(self.graph, self.devices)
-        print(f"   ✅ {len(self.devices)} devices, {self.graph.number_of_edges()} links")
+        print(f"   [OK] {len(self.devices)} devices, {self.graph.number_of_edges()} links ({_time.time()-t0:.1f}s)")
 
         # ── Step 2: Generate Simulated Data ──
-        print("\n📊 Step 2/5: Generating simulated telemetry data...")
+        t0 = _time.time()
+        print("\n[*] Step 2/5: Generating simulated telemetry data...")
         from src.ingestion.snmp_sim import (
             plan_failure_events, generate_snmp_data,
             save_snmp_to_sqlite, save_failure_events,
@@ -75,26 +102,28 @@ class CoPilotOrchestrator:
         self.failure_events = plan_failure_events(device_ids, self.start_time, 24)
         print(f"   Planned {len(self.failure_events)} failure events")
 
-        # Generate with 1-minute intervals for manageable data size
+        # Generate with 2-minute intervals for faster startup
         snmp_df = generate_snmp_data(
             device_ids, self.failure_events,
             start_time=self.start_time, duration_hours=24,
-            interval_seconds=60,
+            interval_seconds=120,
         )
         save_snmp_to_sqlite(snmp_df)
         save_failure_events(self.failure_events)
-        print(f"   ✅ {len(snmp_df)} SNMP metrics + failure events → SQLite")
+        print(f"   [OK] {len(snmp_df)} SNMP metrics + failure events -> SQLite ({_time.time()-t0:.1f}s)")
 
+        t0 = _time.time()
         syslog_df = generate_syslog_data(
             self.devices, self.failure_events,
             start_time=self.start_time, duration_hours=24,
         )
         save_syslog_to_sqlite(syslog_df)
         self.syslog_df = syslog_df
-        print(f"   ✅ {len(syslog_df)} syslog entries → SQLite")
+        print(f"   [OK] {len(syslog_df)} syslog entries -> SQLite ({_time.time()-t0:.1f}s)")
 
         # ── Step 3: Train Forecasting Model ──
-        print("\n🤖 Step 3/5: Training predictive model...")
+        t0 = _time.time()
+        print("\n[*] Step 3/5: Training predictive model...")
         from src.analytics.feature_engineering import (
             load_snmp_data, load_failure_events,
             compute_rolling_features, create_training_labels,
@@ -102,21 +131,23 @@ class CoPilotOrchestrator:
         from src.analytics.forecast_models import train_failure_classifier
 
         snmp_data = load_snmp_data()
-        features = compute_rolling_features(snmp_data)
+        # Use coarser windows for faster feature computation
+        features = compute_rolling_features(snmp_data, windows=[10, 30, 60])
         failures = load_failure_events()
         labeled = create_training_labels(features, failures)
 
         result = train_failure_classifier(labeled)
         self.model_artifact = result
-        print(f"   ✅ Model trained — F1: {result['metrics']['f1_score']:.4f}, "
-              f"AUC: {result['metrics']['auc_roc']:.4f}")
+        print(f"   [OK] Model trained -- F1: {result['metrics']['f1_score']:.4f}, "
+              f"AUC: {result['metrics']['auc_roc']:.4f} ({_time.time()-t0:.1f}s)")
 
         # Store features for dashboard use
         self.features_df = features
         self.labeled_df = labeled
 
         # ── Step 4: Build RAG Index ──
-        print("\n📚 Step 4/5: Building knowledge base index...")
+        t0 = _time.time()
+        print("\n[*] Step 4/5: Building knowledge base index...")
         from src.rag.chunker import chunk_all_runbooks
         from src.rag.embedder import embed_chunks
         from src.rag.vector_store import build_index
@@ -124,15 +155,17 @@ class CoPilotOrchestrator:
         chunks = chunk_all_runbooks()
         embedded = embed_chunks(chunks)
         self.vector_store = build_index(embedded)
-        print(f"   ✅ Indexed {len(chunks)} runbook chunks")
+        print(f"   [OK] Indexed {len(chunks)} runbook chunks ({_time.time()-t0:.1f}s)")
 
         # ── Step 5: Run Predictions ──
-        print("\n🔮 Step 5/5: Running predictive analysis...")
+        t0 = _time.time()
+        print("\n[*] Step 5/5: Running predictive analysis...")
         self._run_predictions()
 
         self._initialized = True
+        total = _time.time() - t_start
         print("\n" + "=" * 60)
-        print("✅ CO-PILOT SYSTEM READY")
+        print(f"[OK] CO-PILOT SYSTEM READY (total: {total:.1f}s)")
         print("=" * 60)
 
     def _run_predictions(self):
@@ -171,7 +204,7 @@ class CoPilotOrchestrator:
                 else:
                     self.devices[did]["status"] = "healthy"
 
-        print(f"   ✅ {len(self.alerts)} proactive alerts generated")
+        print(f"   [OK] {len(self.alerts)} proactive alerts generated")
 
     def _generate_alert(self, device_risk: Dict[str, Any]) -> Dict[str, Any]:
         """Generate a proactive alert with RAG-grounded explanation."""
@@ -319,7 +352,7 @@ if __name__ == "__main__":
 
     # Test chat
     result = orch.handle_chat("How do I fix high CPU on a router?")
-    print(f"\n💬 Chat response:")
+    print(f"\n[CHAT] Chat response:")
     print(f"   Model: {result['model_type']}")
     print(f"   Latency: {result['latency_ms']}ms")
     print(f"   Sources: {[s['runbook_id'] for s in result['sources']]}")

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISRO NetOps Predictive Co-Pilot — AI-Powered Network Operations</title>
+  <meta name="description" content="Predict network failures before they happen. ISRO's air-gapped, AI-powered predictive analytics engine for mission-critical infrastructure.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛰️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- NAV -->
+  <nav id="navbar" class="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo"><span class="nav-logo-icon">🛰️</span><span>ISRO NetOps Co-Pilot</span></a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#model">Model</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#deploy">Deploy</a></li>
+      </ul>
+      <a href="#deploy" class="nav-cta">Request Access</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero" class="hero">
+    <div id="heroThree" class="hero-three"></div>
+    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-gradient-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="eyebrow-tag"><span class="tag-dot"></span>AIR-GAPPED</span>
+        <span class="eyebrow-tag"><span class="tag-dot"></span>ZERO CLOUD</span>
+        <span class="eyebrow-tag"><span class="tag-dot"></span>MLS CLASSIFIED</span>
+      </div>
+      <h1 class="hero-headline">
+        <span class="headline-line">Predict Failures</span>
+        <span class="headline-line headline-accent">Before They Happen.</span>
+      </h1>
+      <p class="hero-sub">Predictive analytics engine for ISRO's mission-critical networks.<br>Runs entirely on-premise. No outbound calls. <strong>Ever.</strong></p>
+      <div class="hero-ctas">
+        <a href="http://localhost:8501" class="btn btn-primary"><span class="btn-shine"></span>Launch Dashboard<svg class="btn-arrow" viewBox="0 0 20 20" fill="none"><path d="M4 10h12m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a>
+        <a href="#model" class="btn btn-ghost">View Model Performance</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-pill" data-tilt><span class="stat-label">F1</span><span class="stat-value" data-count="0.92" data-decimals="2">0.00</span></div>
+        <div class="stat-pill" data-tilt><span class="stat-label">AUC-ROC</span><span class="stat-value" data-count="1.00" data-decimals="2">0.00</span></div>
+        <div class="stat-pill" data-tilt><span class="stat-label">Precision</span><span class="stat-value" data-count="0.86" data-decimals="2">0.00</span></div>
+        <div class="stat-pill stat-green" data-tilt><span class="stat-label">Devices</span><span class="stat-value" data-count="20" data-decimals="0">0</span></div>
+      </div>
+    </div>
+    <div class="hero-scroll-hint"><div class="scroll-mouse"><div class="scroll-dot"></div></div><span class="scroll-text">Scroll to explore</span></div>
+  </section>
+
+  <!-- TICKER -->
+  <section class="ticker-bar">
+    <div class="ticker-glow"></div>
+    <div class="ticker-content" id="tickerContent">
+      <span class="ticker-item"><span class="td td-green"></span>MONITORING ACTIVE</span><span class="ts">◆</span>
+      <span class="ticker-item"><span class="td td-green"></span>17 HEALTHY</span><span class="ts">◆</span>
+      <span class="ticker-item"><span class="td td-red"></span>3 CRITICAL</span><span class="ts">◆</span>
+      <span class="ticker-item"><span class="td td-amber"></span>3 PREDICTIVE ALERTS</span><span class="ts">◆</span>
+      <span class="ticker-item ticker-alert"><span class="td td-red"></span>SRV-018: 90% Failure Risk</span><span class="ts">◆</span>
+      <span class="ticker-item ticker-alert"><span class="td td-red"></span>RTR-001: CPU Critical</span><span class="ts">◆</span>
+      <span class="ticker-item"><span class="td td-green"></span>MODEL F1: 0.92</span><span class="ts">◆</span>
+      <span class="ticker-item"><span class="td td-green"></span>RAG INDEX: 42 CHUNKS</span><span class="ts">◆</span>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="section features-section">
+    <div class="section-bg-grid"></div>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">CAPABILITIES</span>
+        <h2 class="section-title">Engineered for <span class="text-cyan">Mission-Critical</span> Operations</h2>
+        <p class="section-sub">Six integrated modules powering proactive network intelligence.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card reveal" data-delay="0" data-tilt>
+          <div class="card-glow"></div>
+          <div class="feature-icon-wrap"><span class="feature-icon">🗺️</span></div>
+          <h3 class="feature-title">Network Topology</h3>
+          <p class="feature-desc">Live risk view with color-coded nodes. 20 devices monitored in real-time with interactive hover details.</p>
+          <div class="feature-meta"><span class="meta-tag">LIVE</span><span class="meta-value">20 devices · 25 links</span></div>
+        </div>
+        <div class="feature-card reveal" data-delay="80" data-tilt>
+          <div class="card-glow"></div>
+          <div class="feature-icon-wrap"><span class="feature-icon">🚨</span></div>
+          <h3 class="feature-title">Predictive Failure Alerts</h3>
+          <p class="feature-desc">RAG-grounded runbook recommendations with 30-minute lead time before infrastructure degradation.</p>
+          <div class="feature-meta"><span class="meta-tag mt-amber">PROACTIVE</span><span class="meta-value">30 min lead time</span></div>
+        </div>
+        <div class="feature-card reveal" data-delay="160" data-tilt>
+          <div class="card-glow"></div>
+          <div class="feature-icon-wrap"><span class="feature-icon">🤖</span></div>
+          <h3 class="feature-title">Co-Pilot Chat</h3>
+          <p class="feature-desc">Ask in plain English. Get SOP-grounded answers. Clearance-aware responses with cited sources.</p>
+          <div class="feature-meta"><span class="meta-tag mt-purple">AI-POWERED</span><span class="meta-value">MLS-aware</span></div>
+        </div>
+        <div class="feature-card reveal" data-delay="240" data-tilt>
+          <div class="card-glow"></div>
+          <div class="feature-icon-wrap"><span class="feature-icon">📋</span></div>
+          <h3 class="feature-title">System Logs</h3>
+          <p class="feature-desc">Live syslog stream from all monitored devices. Severity filtering from DEBUG to CRITICAL.</p>
+          <div class="feature-meta"><span class="meta-tag">STREAM</span><span class="meta-value">All device classes</span></div>
+        </div>
+        <div class="feature-card reveal" data-delay="320" data-tilt>
+          <div class="card-glow"></div>
+          <div class="feature-icon-wrap"><span class="feature-icon">📊</span></div>
+          <h3 class="feature-title">Forecast Accuracy</h3>
+          <p class="feature-desc">85.71% Precision · 100% Recall · Backtest validated against injected failure scenarios.</p>
+          <div class="feature-meta"><span class="meta-tag mt-green">VALIDATED</span><span class="meta-value">Backtest proven</span></div>
+        </div>
+        <div class="feature-card reveal" data-delay="400" data-tilt>
+          <div class="card-glow"></div>
+          <div class="feature-icon-wrap"><span class="feature-icon">🔒</span></div>
+          <h3 class="feature-title">Air-Gapped Security</h3>
+          <p class="feature-desc">MLS Access Control with operator clearance enforcement. CPU-only local inference engine.</p>
+          <div class="feature-meta"><span class="meta-tag mt-red">CLASSIFIED</span><span class="meta-value">Zero egress</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODEL PERFORMANCE -->
+  <section id="model" class="section model-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">PERFORMANCE</span>
+        <h2 class="section-title">A Model Built for <span class="text-cyan">Mission-Critical</span> Reliability</h2>
+      </div>
+      <div class="metrics-grid reveal">
+        <div class="metric-tile mt-cyan" data-tilt><div class="metric-ring"><svg viewBox="0 0 120 120"><circle class="ring-bg" cx="60" cy="60" r="52"/><circle class="ring-fill" cx="60" cy="60" r="52" data-pct="85.71"/></svg><div class="ring-value"><span class="counter" data-target="85.71" data-suffix="%" data-decimals="2">0</span></div></div><div class="metric-label">PRECISION</div></div>
+        <div class="metric-tile mt-green" data-tilt><div class="metric-ring"><svg viewBox="0 0 120 120"><circle class="ring-bg" cx="60" cy="60" r="52"/><circle class="ring-fill" cx="60" cy="60" r="52" data-pct="100"/></svg><div class="ring-value"><span class="counter" data-target="100" data-suffix="%" data-decimals="0">0</span></div></div><div class="metric-label">RECALL</div></div>
+        <div class="metric-tile mt-purple" data-tilt><div class="metric-ring"><svg viewBox="0 0 120 120"><circle class="ring-bg" cx="60" cy="60" r="52"/><circle class="ring-fill" cx="60" cy="60" r="52" data-pct="92.31"/></svg><div class="ring-value"><span class="counter" data-target="92.31" data-suffix="%" data-decimals="2">0</span></div></div><div class="metric-label">F1 SCORE</div></div>
+        <div class="metric-tile mt-amber" data-tilt><div class="metric-ring"><svg viewBox="0 0 120 120"><circle class="ring-bg" cx="60" cy="60" r="52"/><circle class="ring-fill" cx="60" cy="60" r="52" data-pct="100"/></svg><div class="ring-value"><span class="counter" data-target="100" data-suffix="%" data-decimals="0">0</span></div></div><div class="metric-label">AUC-ROC</div></div>
+      </div>
+      <div class="features-chart reveal">
+        <h3 class="chart-title">Top Predictive Features</h3>
+        <div class="chart-bars">
+          <div class="cb-row"><span class="cb-l">cpu_percent_w60_min</span><div class="cb-track"><div class="cb-fill" data-width="100" style="--c:#FF3B5C"></div></div><span class="cb-v">0.234</span></div>
+          <div class="cb-row"><span class="cb-l">error_rate_w30_max</span><div class="cb-track"><div class="cb-fill" data-width="87" style="--c:#E03070"></div></div><span class="cb-v">0.198</span></div>
+          <div class="cb-row"><span class="cb-l">latency_ms_w15_std</span><div class="cb-track"><div class="cb-fill" data-width="74" style="--c:#C02580"></div></div><span class="cb-v">0.167</span></div>
+          <div class="cb-row"><span class="cb-l">packet_loss_w60_mean</span><div class="cb-track"><div class="cb-fill" data-width="62" style="--c:#A01A90"></div></div><span class="cb-v">0.142</span></div>
+          <div class="cb-row"><span class="cb-l">temperature_w30_max</span><div class="cb-track"><div class="cb-fill" data-width="51" style="--c:#8010A0"></div></div><span class="cb-v">0.118</span></div>
+          <div class="cb-row"><span class="cb-l">cpu_percent_w15_std</span><div class="cb-track"><div class="cb-fill" data-width="43" style="--c:#6A08B0"></div></div><span class="cb-v">0.094</span></div>
+        </div>
+        <p class="chart-caption">Trained on injected failure scenarios across RTR, SRV, and SW device classes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GROUND TRUTH TABLE -->
+  <section class="section events-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">VALIDATION</span>
+        <h2 class="section-title">We Test Against <span class="text-cyan">Reality</span></h2>
+        <p class="section-sub">Injected failure events used for model training and validation.</p>
+      </div>
+      <div class="events-table-wrap reveal">
+        <table class="events-table">
+          <thead><tr><th>Device ID</th><th>Risk Level</th><th>Fault Type</th><th>Pre-Warning</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><code class="did">RTR-001</code></td><td><span class="rb rb-crit">CRITICAL</span></td><td>Hardware Degradation</td><td class="mono">30 min</td><td><span class="sd sd-r"></span>Predicted</td></tr>
+            <tr><td><code class="did">SRV-018</code></td><td><span class="rb rb-crit">CRITICAL</span></td><td>CPU Thermal Runaway</td><td class="mono">25 min</td><td><span class="sd sd-r"></span>Predicted</td></tr>
+            <tr><td><code class="did">SW-007</code></td><td><span class="rb rb-crit">CRITICAL</span></td><td>Port Saturation</td><td class="mono">30 min</td><td><span class="sd sd-r"></span>Predicted</td></tr>
+            <tr><td><code class="did">FW-003</code></td><td><span class="rb rb-high">HIGH</span></td><td>Memory Leak</td><td class="mono">45 min</td><td><span class="sd sd-a"></span>Monitoring</td></tr>
+            <tr><td><code class="did">RTR-012</code></td><td><span class="rb rb-med">MEDIUM</span></td><td>Link Flapping</td><td class="mono">60 min</td><td><span class="sd sd-g"></span>Stable</td></tr>
+            <tr><td><code class="did">SRV-004</code></td><td><span class="rb rb-low">LOW</span></td><td>Disk I/O Spike</td><td class="mono">—</td><td><span class="sd sd-g"></span>Nominal</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECURITY -->
+  <section id="security" class="section security-section">
+    <div class="container">
+      <div class="security-layout">
+        <div class="security-text reveal">
+          <span class="section-tag">SECURITY</span>
+          <h2 class="section-title">Designed for <span class="text-cyan">Classified</span> Networks</h2>
+          <p class="security-desc">Every component is engineered for air-gapped, MLS-compliant deployment. No telemetry. No cloud calls. No exceptions.</p>
+        </div>
+        <div class="security-grid reveal" data-delay="150">
+          <div class="security-card" data-tilt><div class="sc-icon">🔒</div><h4 class="sc-title">Air-Gapped Operation</h4><p class="sc-desc">Zero network egress. Ever. All data stays within your security perimeter.</p></div>
+          <div class="security-card" data-tilt><div class="sc-icon">🖥️</div><h4 class="sc-title">Local CPU Inference</h4><p class="sc-desc">No GPU required. No cloud APIs. All ML models run locally on standard hardware.</p></div>
+          <div class="security-card" data-tilt><div class="sc-icon">🛡️</div><h4 class="sc-title">MLS Access Control</h4><p class="sc-desc">Operator clearance enforced at query level. UNCLASSIFIED, RESTRICTED, CONFIDENTIAL.</p></div>
+          <div class="security-card" data-tilt><div class="sc-icon">📖</div><h4 class="sc-title">RAG-Grounded Answers</h4><p class="sc-desc">All Co-Pilot responses cite verified SOPs. No hallucination — only documented procedures.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPLOY CTA -->
+  <section id="deploy" class="section deploy-section">
+    <div class="container">
+      <div class="deploy-content reveal">
+        <h2 class="deploy-headline">Your Network. Your Infrastructure.<br><span class="text-cyan">Your Intelligence.</span></h2>
+        <p class="deploy-sub">Deploy on any air-gapped Linux server. One command.</p>
+        <div class="deploy-code">
+          <div class="code-header"><span class="cd cd-r"></span><span class="cd cd-a"></span><span class="cd cd-g"></span><span class="code-title">terminal</span></div>
+          <pre class="code-body"><code><span class="cp">$</span> streamlit run app/dashboard.py --server.port 8501</code></pre>
+        </div>
+        <a href="#" class="btn btn-primary btn-large"><span class="btn-shine"></span>Request Deployment Package<svg class="btn-arrow" viewBox="0 0 20 20" fill="none"><path d="M4 10h12m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">🛰️ ISRO NetOps Co-Pilot <code class="fv">v2.0.0</code></div>
+        <div class="footer-links">Air-Gapped Operation <span class="fs">·</span> All inference runs locally <span class="fs">·</span> Answers grounded in verified SOPs</div>
+        <div class="footer-copy">© 2026 Indian Space Research Organisation. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -109,7 +109,7 @@ def generate_snmp_data(
     seed: int = 42,
 ) -> pd.DataFrame:
     """
-    Generate SNMP time-series metrics for all devices.
+    Generate SNMP time-series metrics for all devices (vectorized).
 
     Normal data has realistic noise. Pre-failure windows show gradual degradation
     ramping toward critical values. This creates the signal for ML models.
@@ -125,6 +125,7 @@ def generate_snmp_data(
     rng = np.random.RandomState(seed)
     end_time = start_time + timedelta(hours=duration_hours)
     timestamps = pd.date_range(start=start_time, end=end_time, freq=f"{interval_seconds}s")
+    n_ts = len(timestamps)
 
     # Build a lookup: (device_id) -> list of failure events
     failure_lookup: Dict[str, List[Dict]] = {}
@@ -134,7 +135,14 @@ def generate_snmp_data(
             failure_lookup[did] = []
         failure_lookup[did].append(evt)
 
-    records = []
+    # Precompute diurnal pattern for all timestamps
+    hour_frac = np.array([ts.hour + ts.minute / 60.0 for ts in timestamps])
+    diurnal_base = np.sin(2 * np.pi * hour_frac / 24)
+
+    # Precompute timestamp values for fast comparison
+    ts_values = timestamps.values  # numpy datetime64 array
+
+    all_dfs = []
 
     for device_id in device_ids:
         device_failures = failure_lookup.get(device_id, [])
@@ -143,53 +151,57 @@ def generate_snmp_data(
             lo, hi = _get_normal_range(metric, cfg)
             crit = _get_critical_value(metric, cfg)
             base = rng.uniform(lo, hi)
+            span = hi - lo
 
-            for ts in timestamps:
-                # Start with normal noise
-                noise = rng.normal(0, (hi - lo) * 0.05)
-                # Add diurnal pattern (sinusoidal)
-                hour_frac = ts.hour + ts.minute / 60.0
-                diurnal = math.sin(2 * math.pi * hour_frac / 24) * (hi - lo) * 0.1
-                value = base + noise + diurnal
+            # Vectorized: base + noise + diurnal
+            noise = rng.normal(0, span * 0.05, n_ts)
+            diurnal = diurnal_base * span * 0.1
+            values = base + noise + diurnal
+            is_degrading = np.zeros(n_ts, dtype=bool)
 
-                # Check if we're in a pre-failure degradation window
-                is_degrading = False
-                for evt in device_failures:
-                    ft = evt["failure_timestamp"]
-                    pre_window = evt["pre_failure_window_min"]
-                    window_start = ft - timedelta(minutes=pre_window)
+            # Apply degradation windows (usually 0-6 events, so this loop is tiny)
+            for evt in device_failures:
+                if metric not in evt["affected_metrics"]:
+                    continue
+                ft = evt["failure_timestamp"]
+                pre_window = evt["pre_failure_window_min"]
+                window_start = ft - timedelta(minutes=pre_window)
 
-                    if metric in evt["affected_metrics"] and window_start <= ts <= ft:
-                        # Calculate degradation progress (0 = window start, 1 = failure)
-                        total_seconds = pre_window * 60
-                        elapsed = (ts - window_start).total_seconds()
-                        progress = elapsed / total_seconds
+                ws_np = np.datetime64(window_start)
+                ft_np = np.datetime64(ft)
+                mask = (ts_values >= ws_np) & (ts_values <= ft_np)
 
-                        # Exponential ramp toward critical value
-                        degradation = (crit - base) * (progress ** 2)
-                        value = base + degradation + rng.normal(0, (hi - lo) * 0.03)
-                        is_degrading = True
-                        break
+                if not mask.any():
+                    continue
 
-                # Clamp values
-                if metric == "cpu_percent":
-                    value = np.clip(value, 0, 100)
-                elif metric in ("error_rate", "packet_loss"):
-                    value = max(0.0, value)
-                elif metric == "latency_ms":
-                    value = max(0.1, value)
-                elif metric == "temperature_c":
-                    value = max(15.0, value)
+                total_seconds = pre_window * 60
+                elapsed = (ts_values[mask] - ws_np) / np.timedelta64(1, 's')
+                progress = elapsed / total_seconds
+                degradation = (crit - base) * (progress ** 2)
+                deg_noise = rng.normal(0, span * 0.03, mask.sum())
+                values[mask] = base + degradation + deg_noise
+                is_degrading[mask] = True
 
-                records.append({
-                    "timestamp": ts,
-                    "device_id": device_id,
-                    "metric": metric,
-                    "value": round(float(value), 4),
-                    "is_degrading": is_degrading,
-                })
+            # Clamp values
+            if metric == "cpu_percent":
+                values = np.clip(values, 0, 100)
+            elif metric in ("error_rate", "packet_loss"):
+                values = np.maximum(0.0, values)
+            elif metric == "latency_ms":
+                values = np.maximum(0.1, values)
+            elif metric == "temperature_c":
+                values = np.maximum(15.0, values)
 
-    df = pd.DataFrame(records)
+            df_chunk = pd.DataFrame({
+                "timestamp": timestamps,
+                "device_id": device_id,
+                "metric": metric,
+                "value": np.round(values, 4),
+                "is_degrading": is_degrading,
+            })
+            all_dfs.append(df_chunk)
+
+    df = pd.concat(all_dfs, ignore_index=True)
     return df
 
 
